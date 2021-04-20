@@ -1,0 +1,8 @@
+person:
+  name: jxl
+  age: 26
+  sex: 男
+  desc: my name is ${name}, my age is ${age}
+
+
+
