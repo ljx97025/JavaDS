@@ -1,6 +1,6 @@
 package com.example.demo.entity;
 
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 /**
@@ -9,11 +9,10 @@ import org.springframework.stereotype.Component;
  * @Date: 2021/4/20 18:57
  * @Description :
  */
+@ConfigurationProperties(prefix = "person")
 @Component
 public class Person {
-    @Value("${name}")
     private String name;
-    @Value("${age}")
     private Integer age;
 
     public Person(String name, Integer age) {
