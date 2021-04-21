@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jxl.study.mapper.EmployeeMapper">
+
+    <select id="findEmployByDepartmentID" resultType="employee">
+        select * from employees where department_id =#{id} and manager_id=#{manager_id}
+    </select>
+
+    <select id="findEmployeeById" resultType="employee">
+        select * from employees where employee_id =#{id}
+    </select>
+
+    <select id="findAll"  resultMap="employeeResultMap">
+        select * from employees
+    </select>
+
+    <select id="findEmployeeMap" resultType="employee">
+        select * from employees
+    </select>
+    <select id="findEmployeeMapById" resultType="map">
+        select * from employees where employee_id = #{id}
+    </select>
+<!--    注意，当返回的结果是一个集合对象的是，返回值的类型一定要写集合具体value的类型-->
+<!--    同时在dao的方法上要添加@MapKey的注解，来设置key是什么结果-->
+<!--    如果未设置 则将所有列作为key,列的值作为value-->
+    <select id="findEmployeeMapKV" resultType="map">
+        select * from employees
+    </select>
+
+    <!--当对象中存在其他对象时-->
+    <!--再做查询的时候，有时候需要关联其他对象，因此需要使用关联查询
+    可以通过下面自定义结果集的方式实现
+    -->
+    <select id="findEmployeeByIDAndJob" resultMap="employeeAndJob2">
+        select employees.*, jobs.* from employees,jobs where employee_id=#{id} and jobs.job_id=employees.job_id
+    </select>
+    <!--在mybatis中还提供了一种简单的形式，使用association标签可以搞定
+   -->
+    <resultMap id="employeeAndJob" type="employee">
+        <id column="employee_id" property="id"></id>
+        <result column="first_name" property="firstName"></result>
+        <association property="job" javaType="Job">
+            <id column="job_id" property="jobId"></id>
+            <result column="job_title" property="jobTitle"></result>
+            <result column="min_salary" property="minSalary"></result>
+            <result column="max_salary" property="maxSalary"></result>
+        </association>
+    </resultMap>
+
+    <resultMap id="employeeAndJob2" type="employee">
+        <id column="employee_id" property="id"></id>
+        <result column="first_name" property="firstName"></result>
+        <result column="job_id" property="job.jobId"></result>
+        <result column="job_title" property="job.jobTitle"></result>
+        <result column="min_salary" property="job.minSalary"></result>
+        <result column="max_salary" property="job.maxSalary"></result>
+    </resultMap>
+
+    <resultMap id="employeeResultMap" type="employee">
+        <id column="employee_id" property="id"></id>
+    </resultMap>
+
+</mapper>
