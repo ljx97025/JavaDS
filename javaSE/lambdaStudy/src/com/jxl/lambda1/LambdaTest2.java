@@ -99,6 +99,7 @@ interface LambdaSingleReturnMultipleParameter {
 @FunctionalInterface
 interface LambdaSingleReturnNoneParameter {
     int test();
+
 }
 //6.有返回值的一参接口
 @FunctionalInterface
