@@ -1,11 +1,16 @@
 package com.jxl.test;
 
+import com.jxl.entity.Decorator;
+import com.jxl.entity.Man;
+import com.jxl.entity.MyAnnotation;
 import com.jxl.entity.Person;
 import org.junit.Test;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.Arrays;
 
 /**
  * @ClassName : ClassAPIStudy
@@ -77,6 +82,12 @@ public class ClassAPIStudy {
         Method showDefault = personClass.getDeclaredMethod("showDefault");
         showDefault.setAccessible(true);
         showDefault.invoke(person);
+        System.out.println("=============获取方法上注解=============");
+        // 获取方法上注解
+        Class<Man> manClass = Man.class;
+        Decorator decorator = manClass.getMethod("show").getAnnotation(Decorator.class);
+        System.out.println(decorator.value());
+
     }
 
     /**
@@ -163,4 +174,61 @@ public class ClassAPIStudy {
 
 
     }
+
+    /**
+     * 获取Class对象所指向类的注解
+     */
+    @Test
+    public void testAnnotation() {
+        // 返回当前类的注解
+        Class<Person> personClass = Person.class;
+        Annotation[] annotations = personClass.getAnnotations();
+        for (Annotation annotation : annotations) {
+            System.out.println(annotation);
+            System.out.println(annotation.annotationType());
+        }
+        System.out.println("========================");
+        // 返回当前类的注解，不包含继承的
+        Annotation[] declaredAnnotations = personClass.getDeclaredAnnotations();
+        for (Annotation annotation1 : declaredAnnotations) {
+            System.out.println(annotation1);
+            System.out.println(annotation1.annotationType());
+            System.out.println(annotation1.annotationType().getSimpleName());
+        }
+        System.out.println("========================");
+        // 获取类注解的值
+        MyAnnotation declaredAnnotation = personClass.getDeclaredAnnotation(MyAnnotation.class);
+        System.out.println(declaredAnnotation.value());
+        System.out.println(declaredAnnotation.name());
+
+        System.out.println("===========继承中使用反射获取注解=============");
+        // 返回当前类的注解
+        Class<Man> manClass = Man.class;
+        Annotation[] manAnnotations = manClass.getAnnotations();
+        for (Annotation manAnnotation : manAnnotations) {
+            System.out.println(manAnnotation);
+            System.out.println(manAnnotation.annotationType());
+        }
+        System.out.println("========================");
+        // 返回当前类的注解，不包含继承的
+        Annotation[] manDeclaredAnnotations = manClass.getDeclaredAnnotations();
+        for (Annotation manAnnotation1 : manDeclaredAnnotations) {
+            System.out.println(manAnnotation1);
+            System.out.println(manAnnotation1.annotationType());
+            System.out.println(manAnnotation1.annotationType().getSimpleName());
+        }
+        System.out.println("========================");
+        // 获取类注解的值
+        MyAnnotation manDeclaredAnnotation = manClass.getAnnotation(MyAnnotation.class);
+        System.out.println(manDeclaredAnnotation.value());
+        System.out.println(manDeclaredAnnotation.name());
+
+        Decorator manDeclaredAnnotationD = manClass.getDeclaredAnnotation(Decorator.class);
+        System.out.println(manDeclaredAnnotationD.value());
+        System.out.println("========================");
+
+
+    }
+
+
 }

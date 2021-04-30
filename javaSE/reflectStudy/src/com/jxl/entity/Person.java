@@ -8,6 +8,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  * @Date: 2021/4/26 15:51
  * @Description :
  */
+@MyAnnotation(value = "man")
 public class Person {
     private String name;
     protected int age;
