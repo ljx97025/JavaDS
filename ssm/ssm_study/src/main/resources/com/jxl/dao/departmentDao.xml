@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace:编写接口的全类名，就是告诉要实现该配置文件是哪个接口的具体实现-->
+<mapper namespace="com.jxl.dao.DepartmentDao">
+
+    <!--
+     在使用mybatis进行查询的时候，mybatis默认会帮我们进行结果的封装，但是要求列名跟属性名称一一对应上
+     在实际的使用过程中，我们会发现有时候数据库中的列名跟我们类中的属性名并不是一一对应的，此时就需要起别名
+     起别名有两种实现方式：
+        1、在编写sql语句的时候添加别名
+        2、自定义封装结果集
+     -->
+    <!--根据查询的数据进行结果的封装要使用resultMap属性，表示使用自定义规则-->
+
+    <!--自定义结果集，将每一个列的数据跟javaBean的对象属性对应起来
+       type:表示为哪一个javaBean对象进行对应
+       id:唯一标识，方便其他属性标签进行引用
+       -->
+    <resultMap id="departmentResultMap" type="department">
+        <id column="department_id" property="departmentID"></id>
+        <!--
+      指定主键列的对应规则：
+      column：表示表中的主键列
+      property:指定javaBean的属性
+      -->
+        <result column="department_name" property="departmentName"></result>
+        <result column="manager_id" property="managerID"></result>
+        <result column="location_id" property="locationID"></result>
+    </resultMap>
+
+    <select id="findAll" resultMap="departmentResultMap">
+        select * from departments
+    </select>
+
+
+<!--    &lt;!&ndash; 当数据库中表的列名与定义的对象的属性名不同时，可以使用对应类的属性名的别名   &ndash;&gt;-->
+<!--    <select id="findAll" resultType="department">-->
+<!--        select department_id departmentID,department_name departmentName,manager_id managerID,location_id locationID from departments-->
+<!--    </select>-->
+
+<!--当对象中存在集合时-->
+
+    <select id="findDepartmentAllEmployeeByID" resultMap="selectDepartmentAndEmployee">
+        select *
+        from departments left join employees on
+            departments.department_id=employees.department_id and
+            departments.manager_id=employees.manager_id where departments.department_id = #{id}
+    </select>
+
+    <resultMap id="selectDepartmentAndEmployee" type="department">
+        <id column="department_id" property="departmentID"></id>
+        <result column="department_name" property="departmentName"></result>
+        <result column="manager_id" property="managerID"></result>
+        <result column="location_id" property="locationID"></result>
+        <!--封装集合类的元素
+              property：指定集合的属性
+              ofType:指定集合中的元素类型
+        -->
+        <collection property="employees" ofType="employee">
+            <id column="employee_id" property="id"></id>
+            <result column="first_name" property="firstName"></result>
+        </collection>
+    </resultMap>
+
+
+    <select id="findDepartmentAllEmployeeByIDSimple" resultMap="selectDepartmentAndEmployeeSelect">
+        select * from departments where department_id = #{id}
+    </select>
+
+    <resultMap id="selectDepartmentAndEmployeeSelect" type="department">
+        <id column="department_id" property="departmentID"></id>
+        <result column="department_name" property="departmentName"></result>
+        <result column="manager_id" property="managerID"></result>
+        <result column="location_id" property="locationID"></result>
+<!--    column 设置复合主键时，等号左边，对应嵌套select语句的属性，即方法的参数名，等号右边，对应被嵌套select语句中的列名   -->
+        <collection property="employees" select="com.jxl.dao.EmployeeDao.findEmployByDepartmentID"
+             ofType="employee"  column="{id=department_id,manager_id=manager_id}" >
+        </collection>
+    </resultMap>
+
+
+
+</mapper>

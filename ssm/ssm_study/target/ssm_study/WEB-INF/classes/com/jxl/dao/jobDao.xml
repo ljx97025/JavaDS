@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jxl.dao.JobDao">
+    <!--增删改查操作不需要返回值，增删改返回的是影响的行数，mybatis会自动做判断-->
+    <insert id="insertJob" >
+        insert into jobs values(#{jobId},#{jobTitle},#{minSalary},#{maxSalary})
+    </insert>
+    <delete id="deleteJobById">
+        delete from jobs where job_id=#{jobId}
+    </delete>
+    <update id="updateJobById">
+        update jobs set min_salary=#{money} where job_id=#{jobId}
+    </update>
+    <update id="updateJobByIdt">
+        update jobs set max_salary=#{maxSalary} where job_id=#{jobId}
+    </update>
+
+    <update id="updateJobByIdUseSetsql">
+        update jobs
+        <set>
+            <if test="job.minSalary!=null">
+                min_salary= #{job.minSalary},
+            </if>
+
+            <if test="job.maxSalary!=null">
+                max_salary = #{job.maxSalary}
+            </if>
+            <where>
+                job_id=#{job.jobId}
+            </where>
+        </set>
+    </update>
+<!--使用trim标签实现set-->
+<!--    <update id="updateJobByIdUseSetsql">-->
+<!--        update jobs-->
+<!--        <trim prefix="set" prefixOverrides="," suffixOverrides="," suffix="where job_id=#{job.jobId}">-->
+<!--            <if test="job.minSalary!=null">-->
+<!--                min_salary= #{job.minSalary},-->
+<!--            </if>-->
+
+<!--            <if test="job.maxSalary!=null">-->
+<!--                max_salary = #{job.maxSalary},-->
+<!--            </if>-->
+
+<!--        </trim>-->
+<!--    </update>-->
+
+    <select id="findJonBySalary1" resultType="job">
+        select * from jobs where
+        <if test="minS!=null">
+            min_salary> #{minS}
+        </if>
+
+        <if test="maxS!=null">
+            and max_salary &gt; #{maxS}
+        </if>
+
+    </select>
+
+<!-- 上面语句如果第一个为空，第二个不为空，则由于and报错，
+使用 动态sql where标签 解决 and 问题   -->
+    <select id="findJonBySalary" resultType="job">
+        select * from  jobs
+        <where>
+            <if test="minS!=null">
+                min_salary> #{minS}
+            </if>
+
+            <if test="maxS!=null">
+                and max_salary &gt; #{maxS}
+            </if>
+        </where>
+
+    </select>
+
+    <!-- 上面语句如果将 and 放置第一个语句后 第一个不为空，第二个为空，则由于and报错，
+    使用 动态sql trim标签 解决问题   -->
+    <!--    trim标签使用-->
+    <!--    1、trim 有四个属性-->
+    <!--    2、prefix，suffix 表示在trim标签包裹的部分的前面或者后面 添加内容（ 注意：是没有prefixOverrides，suffixOverrides的情况下）-->
+    <!--    3、如果有prefixOverrides，suffixOverrides 表示**覆盖**Overrides中的内容。-->
+    <!--    4、如果只有prefixOverrides，suffixOverrides 表示删除。-->
+    <select id="findJobByIDAndSalary" resultType="job">
+        select * from jobs
+        <trim prefix="where" prefixOverrides="and|or" suffixOverrides="and">
+               or job_id like 'AD%'
+            <if test="minS!=null">
+                and min_salary> #{minS}
+            </if>
+            <if test="maxS!=null">
+                and max_salary &lt; #{maxS}
+            </if>
+        </trim>
+    </select>
+
+    <!--foreach是对集合进行遍历
+    collection="deptnos"  指定要遍历的集合
+    close="" 表示以什么结束
+    index="" 给定一个索引值
+    item=""  遍历的每一个元素的值
+    open=""  表示以什么开始
+    separator="" 表示多个元素的分隔符
+    -->
+    <select id="findJobByJobIDLike" resultType="job">
+        select * from jobs where job_id in
+        <foreach collection="job_ids" close=")" index="idx" item="job_id" open="(" separator=",">
+            #{job_id}
+        </foreach>
+    </select>
+
+    <select id="findJobByChoose" resultType="job">
+        select * from jobs
+        <where>
+            <choose>
+                <when test="minS!=null">
+                    min_salary> #{minS}
+                </when>
+                <when test="maxS!=null">
+                    max_salary &gt; #{maxS}
+                </when>
+                <otherwise>
+                    job_id like 'AD%'
+                </otherwise>
+            </choose>
+        </where>
+
+    </select>
+
+</mapper>
