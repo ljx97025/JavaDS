@@ -34,14 +34,6 @@ public class TankFrame extends Frame {
     @Override
     public void paint(Graphics g) {
         mainTank.paint(g);
-
-
-        // 使用 if 或 switch 均不会出现按双键，斜着走的情况，这是由于dir只能有一个值
-//        if (dir == Dir.LEFT) x -= SPEFD;
-//        if (dir == Dir.UP)   y -= SPEFD;
-//        if (dir == Dir.RIGHT) x += SPEFD;
-//        if (dir == Dir.DOWN) y += SPEFD;
-
     }
 
     class KeyListener extends KeyAdapter {
@@ -96,19 +88,15 @@ public class TankFrame extends Frame {
 
         private void setMainTankDir(){
             if (bl){
-//                x -= SPEFD;
                 mainTank.setDir(Dir.LEFT);
             }
             if (bu){
-//                y -= SPEFD;
                 mainTank.setDir(Dir.UP);
             }
             if (br){
-//                x += SPEFD;
                 mainTank.setDir(Dir.RIGHT);
             }
             if (bd){
-//                y += SPEFD;
                 mainTank.setDir(Dir.DOWN);
             }
         }
