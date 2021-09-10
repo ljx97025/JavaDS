@@ -15,7 +15,7 @@ import java.awt.event.WindowEvent;
 public class TankFrame extends Frame {
 
     Tank mainTank = new Tank(200,200,Dir.LEFT);
-
+    TankUnit tankUnit = new TankUnit(2);
     public TankFrame(){
         setSize(800,600);
         setResizable(false);
@@ -33,7 +33,7 @@ public class TankFrame extends Frame {
     @Override
     public void paint(Graphics g) {
         mainTank.paint(g);
-
+        tankUnit.paint(g);
 
         // 使用 if 或 switch 均不会出现按双键，斜着走的情况，这是由于dir只能有一个值
 //        if (dir == Dir.LEFT) x -= SPEFD;

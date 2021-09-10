@@ -1,6 +1,7 @@
 package com.ljx.tank;
 
 import java.awt.*;
+import java.util.Random;
 
 /**
  * @ClassName : Tank
@@ -19,6 +20,30 @@ public class Tank {
         this.y = y;
         this.dir = dir;
     }
+
+    public Tank() {
+        Random xr = new Random();
+        Random yr = new Random();
+        this.x = xr.nextInt(800);
+        this.y = yr.nextInt(600);
+
+        switch((x+y)%4){
+            case 0:
+                this.dir = Dir.LEFT;
+                break;
+            case 1:
+                this.dir = Dir.UP;
+                break;
+            case 2:
+                this.dir = Dir.RIGHT;
+                break;
+            case 3:
+                this.dir = Dir.DOWN;
+                break;
+        }
+
+    }
+
 
 
     public void paint(Graphics g){
