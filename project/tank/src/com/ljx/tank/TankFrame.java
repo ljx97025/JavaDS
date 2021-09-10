@@ -14,11 +14,8 @@ import java.awt.event.WindowEvent;
  */
 public class TankFrame extends Frame {
 
-    int x=200;
-    int y=200;
+    Tank mainTank = new Tank(200,200,Dir.LEFT);
 
-    Dir dir = Dir.LEFT;
-    private static final int SPEFD = 10;
     public TankFrame(){
         setSize(800,600);
         setResizable(false);
@@ -36,21 +33,7 @@ public class TankFrame extends Frame {
 
     @Override
     public void paint(Graphics g) {
-        g.fillRect(x,y,50,50);
-        switch (dir){
-            case LEFT:
-                x -= SPEFD;
-                break;
-            case UP:
-                y -= SPEFD;
-                break;
-            case RIGHT:
-                x += SPEFD;
-                break;
-            case DOWN:
-                y += SPEFD;
-                break;
-        }
+        mainTank.paint(g);
 
 
         // 使用 if 或 switch 均不会出现按双键，斜着走的情况，这是由于dir只能有一个值
@@ -114,19 +97,19 @@ public class TankFrame extends Frame {
         private void setMainTankDir(){
             if (bl){
 //                x -= SPEFD;
-                dir = Dir.LEFT;
+                mainTank.setDir(Dir.LEFT);
             }
             if (bu){
 //                y -= SPEFD;
-                dir = Dir.UP;
+                mainTank.setDir(Dir.UP);
             }
             if (br){
 //                x += SPEFD;
-                dir = Dir.RIGHT;
+                mainTank.setDir(Dir.RIGHT);
             }
             if (bd){
 //                y += SPEFD;
-                dir = Dir.DOWN;
+                mainTank.setDir(Dir.DOWN);
             }
         }
 
