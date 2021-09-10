@@ -21,7 +21,6 @@ public class TankFrame extends Frame {
         setResizable(false);
         setTitle("Tank war");
         setVisible(true);
-
         addKeyListener(new KeyListener());
         addWindowListener(new WindowAdapter() {
             @Override
