@@ -3,6 +3,7 @@ package com.ljx.tank;
 import java.awt.*;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * @ClassName : TankUnit
@@ -13,8 +14,10 @@ import java.util.ArrayList;
 public class TankUnit {
     private ArrayList<Tank> tanks = new ArrayList();
     private int tankCount;
+    private TankFrame tf = null;
 
-    public TankUnit(int tankCount) {
+    public TankUnit(TankFrame tf, int tankCount) {
+        this.tf = tf;
         this.tankCount = tankCount;
         createTanks();
     }
@@ -26,13 +29,36 @@ public class TankUnit {
         }
 
         for (int i=0;i<this.tankCount;i++){
-            tanks.add(new Tank());
+            tanks.add(new Tank(tf));
         }
     }
 
     public void paint(Graphics g) {
+        Tank tank = null;
         for (int i=0;i<this.tankCount;i++){
-            tanks.get(i).paint(g);
+            tank = tanks.get(i);
+            randomDir(tank);
+            tank.fire();
+            tank.paint(g);
+        }
+    }
+
+    public void randomDir(Tank tank) {
+        tank.setMoving(true);
+        int randomNum = new Random().nextInt(4);
+        switch(randomNum % 4){
+            case 0:
+                tank.setDir(Dir.LEFT);
+                break;
+            case 1:
+                tank.setDir(Dir.UP);
+                break;
+            case 2:
+                tank.setDir(Dir.RIGHT);
+                break;
+            case 3:
+                tank.setDir(Dir.DOWN);
+                break;
         }
     }
 }

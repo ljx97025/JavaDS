@@ -17,7 +17,7 @@ public class Bullet {
 
     private static final int BULLET_WIDTH = 25;
     private static final int BULLET_HEIGHT = 25;
-    private static final int SPEFD = 15;
+    private static final int SPEFD = 20;
 
     public Bullet(int x, int y, Dir dir, TankFrame tf) {
         this(x, y, dir);

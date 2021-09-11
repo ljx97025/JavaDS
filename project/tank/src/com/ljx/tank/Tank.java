@@ -37,11 +37,13 @@ public class Tank {
         this.tf = tf;
     }
 
-    public Tank() {
+    public Tank(TankFrame tf) {
+        this.tf = tf;
+
         Random xr = new Random();
         Random yr = new Random();
-        this.x = xr.nextInt(800);
-        this.y = yr.nextInt(600);
+        this.x = xr.nextInt(TankFrame.GAME_WIDTH);
+        this.y = yr.nextInt(TankFrame.GAME_HEIGHT);
 
         switch((x+y)%4){
             case 0:
