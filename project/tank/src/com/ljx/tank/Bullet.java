@@ -15,6 +15,8 @@ public class Bullet {
     private boolean living = true;
     private TankFrame tf=null;
 
+    private static final int SPEFD = 15;
+
     public Bullet(int x, int y, Dir dir, TankFrame tf) {
         this.x = x;
         this.y = y;
@@ -27,13 +29,31 @@ public class Bullet {
         if (!living) {
             tf.bulletList.remove(this);
         }
+
+        Color c = g.getColor();
+        g.setColor(Color.RED);
         g.fillOval(x,y,25,25);
-        if (x<0 || y<0 || x>tf.GAME_WIDTH || y<tf.GAME_HEIGHT) {
-            living = false;
-        }
+        g.setColor(c);
+
     }
 
     public void move(){
-
+        switch (dir){
+            case LEFT:
+                x -= SPEFD;
+                break;
+            case UP:
+                y -= SPEFD;
+                break;
+            case RIGHT:
+                x += SPEFD;
+                break;
+            case DOWN:
+                y += SPEFD;
+                break;
+        }
+        if (x<0 || y<0 || x>tf.GAME_WIDTH || y<tf.GAME_HEIGHT) {
+            living = false;
+        }
     }
 }
