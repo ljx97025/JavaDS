@@ -9,10 +9,11 @@ import java.awt.*;
  * @Description : 坦克类
  */
 public class Tank {
-    private int x;
-    private int y;
-    private Dir dir ;
-    private static final int SPEFD = 10;
+    private int x; // 横坐标
+    private int y; // 纵坐标
+    private Dir dir; // 方向
+    private boolean moving; // 坦克移动标志
+    private static final int SPEFD = 10; // 坦克移动速度
 
     public Tank(int x, int y, Dir dir) {
         this.x = x;
@@ -24,6 +25,14 @@ public class Tank {
     public void paint(Graphics g){
 
         g.fillRect(x,y,50,50);
+        move();
+    }
+
+    private void move() {
+        // 如果moving为空，直接返回，不移动
+        if (! moving){
+            return;
+        }
         switch (dir){
             case LEFT:
                 x -= SPEFD;
@@ -38,6 +47,14 @@ public class Tank {
                 y += SPEFD;
                 break;
         }
+    }
+
+    public boolean isMoving() {
+        return moving;
+    }
+
+    public void setMoving(boolean moving) {
+        this.moving = moving;
     }
 
     public int getX() {
@@ -64,7 +81,4 @@ public class Tank {
         this.dir = dir;
     }
 
-    public static int getSPEFD() {
-        return SPEFD;
-    }
 }
