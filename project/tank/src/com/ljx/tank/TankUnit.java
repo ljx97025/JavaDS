@@ -1,6 +1,8 @@
 package com.ljx.tank;
 
 import java.awt.*;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 
 /**
  * @ClassName : TankUnit
@@ -9,7 +11,7 @@ import java.awt.*;
  * @Description : 坦克的群组，用于管理坦克群组操作
  */
 public class TankUnit {
-    private Tank[] tanks = new Tank[20];
+    private ArrayList<Tank> tanks = new ArrayList();
     private int tankCount;
 
     public TankUnit(int tankCount) {
@@ -24,13 +26,13 @@ public class TankUnit {
         }
 
         for (int i=0;i<this.tankCount;i++){
-            tanks[i] = new Tank();
+            tanks.add(new Tank());
         }
     }
 
     public void paint(Graphics g) {
         for (int i=0;i<this.tankCount;i++){
-            tanks[i].paint(g);
+            tanks.get(i).paint(g);
         }
     }
 }
