@@ -87,6 +87,29 @@ public class Tank {
                 y += SPEFD;
                 break;
         }
+        isBound();
+    }
+
+
+    /**
+     * @Author lt
+     * @Description 坦克越界处理,title边框大小为获取，y初始值无法确定
+     * @Param
+     * @return
+     **/
+    private void isBound() {
+        if (x < 0) {
+            x = 0;
+        }
+        if (x > TankFrame.GAME_WIDTH -TANK_WIDTH) {
+            x = TankFrame.GAME_WIDTH -TANK_WIDTH;
+        }
+        if (y < 30) {
+            y = 30;
+        }
+        if (y > TankFrame.GAME_HEIGHT - TANK_HEIGHT) {
+            y = TankFrame.GAME_HEIGHT - TANK_HEIGHT;
+        }
     }
 
     public int getX() {

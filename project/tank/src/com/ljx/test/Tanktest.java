@@ -19,5 +19,4 @@ public class Tanktest {
         System.out.println(Dir.DOWN);
         System.out.println(10/3);
     }
-
 }
