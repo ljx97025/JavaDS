@@ -5,6 +5,8 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @ClassName : TankFrame
@@ -14,10 +16,14 @@ import java.awt.event.WindowEvent;
  */
 public class TankFrame extends Frame {
 
-    Tank mainTank = new Tank(200,200,Dir.LEFT);
-    Bullet bullet = new Bullet(200,200,Dir.LEFT);
+    Tank mainTank = new Tank(200,200,Dir.LEFT,this);
+    List<Bullet> bulletList = new ArrayList();
+
+    static int GAME_WIDTH=800;
+    static int GAME_HEIGHT=600;
+
     public TankFrame(){
-        setSize(800,600);
+        setSize(GAME_WIDTH,GAME_HEIGHT);
         setResizable(false);
         setTitle("Tank war");
         setVisible(true);
@@ -30,10 +36,33 @@ public class TankFrame extends Frame {
         });
     }
 
+    // 防止屏幕闪动
+    Image offScreenImage = null;
+    @Override
+    public void update(Graphics g) {
+        if (offScreenImage == null) {
+            offScreenImage = this.createImage(GAME_WIDTH, GAME_HEIGHT);
+        }
+        Graphics gOffScreen = offScreenImage.getGraphics();
+        Color c = gOffScreen.getColor();
+        gOffScreen.setColor(Color.WHITE);
+        gOffScreen.fillRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
+        gOffScreen.setColor(c);
+        paint(gOffScreen);
+        g.drawImage(offScreenImage, 0, 0, null);
+    }
+
     @Override
     public void paint(Graphics g) {
+        Color c = g.getColor();
+        g.setColor(Color.BLACK);
+        g.drawString("剩余子弹数："+bulletList.size(),50,50);
+        g.setColor(c);
         mainTank.paint(g);
-        bullet.paint(g);
+        for (int i=0;i<bulletList.size();i++){
+            bulletList.get(i).paint(g);
+        }
+
     }
 
     class KeyListener extends KeyAdapter {
@@ -59,6 +88,9 @@ public class TankFrame extends Frame {
                     break;
                 case KeyEvent.VK_DOWN:
                     bd = true;
+                    break;
+                case KeyEvent.VK_CONTROL:
+                    mainTank.fire();
                     break;
             }
 
@@ -109,6 +141,5 @@ public class TankFrame extends Frame {
         }
 
     }
-
 
 }

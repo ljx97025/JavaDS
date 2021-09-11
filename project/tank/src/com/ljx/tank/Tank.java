@@ -13,12 +13,14 @@ public class Tank {
     private int y; // 纵坐标
     private Dir dir; // 方向
     private boolean moving; // 坦克移动标志
+    private TankFrame tf = null;
     private static final int SPEFD = 10; // 坦克移动速度
 
-    public Tank(int x, int y, Dir dir) {
+    public Tank(int x, int y, Dir dir, TankFrame tf) {
         this.x = x;
         this.y = y;
         this.dir = dir;
+        this.tf = tf;
     }
 
 
@@ -81,4 +83,10 @@ public class Tank {
         this.dir = dir;
     }
 
+    /**
+     * 发射子弹
+     */
+    public void fire() {
+        tf.bulletList.add(new Bullet(x,y,dir,tf));
+    }
 }
