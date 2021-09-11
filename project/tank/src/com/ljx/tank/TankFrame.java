@@ -17,7 +17,7 @@ import java.util.List;
 public class TankFrame extends Frame {
 
     Tank mainTank = new Tank(200,200,Dir.LEFT,this);
-//    TankUnit tankUnit = new TankUnit(2);
+    TankUnit tankUnit = new TankUnit(2);
     List<Bullet> bulletList = new ArrayList<>();
     static int GAME_WIDTH = 800;
     static int GAME_HEIGHT = 600;
@@ -56,7 +56,7 @@ public class TankFrame extends Frame {
     @Override
     public void paint(Graphics g) {
         mainTank.paint(g);
-//        tankUnit.paint(g);
+        tankUnit.paint(g);
         for (int i=0;i<bulletList.size();i++) {
             bulletList.get(i).paint(g);
         }
@@ -95,7 +95,6 @@ public class TankFrame extends Frame {
                     break;
             }
             setMainTankDir();
-            mainTank.setMoving(true);
         }
 
         @Override
@@ -119,10 +118,16 @@ public class TankFrame extends Frame {
                     break;
             }
             setMainTankDir();
-            mainTank.setMoving(false);
         }
 
         private void setMainTankDir(){
+
+            if (!bl && !bu && !bd && !br) {
+                mainTank.setMoving(false);
+            } else {
+                mainTank.setMoving(true);
+            }
+
             if (bl){
 //                x -= SPEFD;
                 mainTank.setDir(Dir.LEFT);

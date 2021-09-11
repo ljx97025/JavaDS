@@ -18,6 +18,8 @@ public class Tank {
     private TankFrame tf=null;
     private boolean moving = false;
 
+    private static final int TANK_WIDTH = 50;
+    private static final int TANK_HEIGHT = 50;
     private static final int SPEFD = 10;
 
 
@@ -61,7 +63,7 @@ public class Tank {
 
 
     public void paint(Graphics g){
-        g.fillRect(x,y,50,50);
+        g.fillRect(x,y,TANK_WIDTH,TANK_HEIGHT);
         move();
     }
 
@@ -119,6 +121,14 @@ public class Tank {
 
     public boolean isMoving() {
         return moving;
+    }
+
+    public static int getTankWidth() {
+        return TANK_WIDTH;
+    }
+
+    public static int getTankHeight() {
+        return TANK_HEIGHT;
     }
 
     public void setMoving(boolean moving) {

@@ -17,6 +17,7 @@ public class Tanktest {
         System.out.println(Dir.UP);
         System.out.println(Dir.RIGHT);
         System.out.println(Dir.DOWN);
+        System.out.println(10/3);
     }
 
 }

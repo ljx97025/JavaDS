@@ -15,15 +15,36 @@ public class Bullet {
     private boolean living = true;
     private TankFrame tf=null;
 
+    private static final int BULLET_WIDTH = 25;
+    private static final int BULLET_HEIGHT = 25;
     private static final int SPEFD = 15;
 
     public Bullet(int x, int y, Dir dir, TankFrame tf) {
-        this.x = x;
-        this.y = y;
+        this(x, y, dir);
         this.dir = dir;
         this.tf = tf;
     }
 
+    public Bullet(int x, int y, Dir dir) {
+        switch (dir) {
+            case LEFT:
+                this.x = x-BULLET_WIDTH;
+                this.y = y-BULLET_HEIGHT/2 + Tank.getTankHeight()/2;
+                break;
+            case RIGHT:
+                this.x = x+Tank.getTankWidth();
+                this.y = y-BULLET_HEIGHT/2 + Tank.getTankHeight()/2;
+                break;
+            case UP:
+                this.x = x + Tank.getTankWidth()/2 - BULLET_WIDTH/2;
+                this.y = y-BULLET_HEIGHT;
+                break;
+            case DOWN:
+                this.x = x + Tank.getTankWidth()/2 - BULLET_WIDTH/2;
+                this.y = y + Tank.getTankHeight();
+                break;
+        }
+    }
 
     public void paint(Graphics g) {
         if (!living) {
@@ -32,9 +53,9 @@ public class Bullet {
 
         Color c = g.getColor();
         g.setColor(Color.RED);
-        g.fillOval(x,y,25,25);
+        g.fillOval(x,y,BULLET_WIDTH,BULLET_HEIGHT);
         g.setColor(c);
-
+        move();
     }
 
     public void move(){
@@ -52,7 +73,7 @@ public class Bullet {
                 y += SPEFD;
                 break;
         }
-        if (x<0 || y<0 || x>tf.GAME_WIDTH || y<tf.GAME_HEIGHT) {
+        if (x<0 || y<0 || x>tf.GAME_WIDTH || y>tf.GAME_HEIGHT) {
             living = false;
         }
     }
