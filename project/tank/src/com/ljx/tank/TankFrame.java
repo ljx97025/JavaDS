@@ -5,6 +5,8 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @ClassName : TankFrame
@@ -15,9 +17,13 @@ import java.awt.event.WindowEvent;
 public class TankFrame extends Frame {
 
     Tank mainTank = new Tank(200,200,Dir.LEFT);
-    TankUnit tankUnit = new TankUnit(2);
+//    TankUnit tankUnit = new TankUnit(2);
+    List<Bullet> bulletList = new ArrayList<>();
+    static int GAME_WIDTH = 800;
+    static int GAME_HEIGHT = 600;
+
     public TankFrame(){
-        setSize(800,600);
+        setSize(GAME_WIDTH,GAME_HEIGHT);
         setResizable(false);
         setTitle("Tank war");
         setVisible(true);
@@ -30,10 +36,30 @@ public class TankFrame extends Frame {
         });
     }
 
+    // 防止屏幕闪烁
+    Image offScreenImage = null;
+
+    @Override
+    public void update(Graphics g) {
+        if (offScreenImage == null) {
+            offScreenImage = this.createImage(GAME_WIDTH, GAME_HEIGHT);
+        }
+        Graphics gOffScreen = offScreenImage.getGraphics();
+        Color c = gOffScreen.getColor();
+        gOffScreen.setColor(Color.WHITE);
+        gOffScreen.fillRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
+        gOffScreen.setColor(c);
+        paint(gOffScreen);
+        g.drawImage(offScreenImage, 0, 0, null);
+    }
+
     @Override
     public void paint(Graphics g) {
         mainTank.paint(g);
-        tankUnit.paint(g);
+//        tankUnit.paint(g);
+        for (int i=0;i<bulletList.size();i++) {
+            bulletList.get(i).paint(g);
+        }
 
         // 使用 if 或 switch 均不会出现按双键，斜着走的情况，这是由于dir只能有一个值
 //        if (dir == Dir.LEFT) x -= SPEFD;
@@ -68,9 +94,8 @@ public class TankFrame extends Frame {
                     bd = true;
                     break;
             }
-
             setMainTankDir();
-
+            mainTank.setMoving(true);
         }
 
         @Override
@@ -89,8 +114,12 @@ public class TankFrame extends Frame {
                 case KeyEvent.VK_DOWN:
                     bd = false;
                     break;
+                case KeyEvent.VK_CONTROL:
+                    mainTank.fire();
+                    break;
             }
             setMainTankDir();
+            mainTank.setMoving(false);
         }
 
         private void setMainTankDir(){

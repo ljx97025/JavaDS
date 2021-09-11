@@ -1,5 +1,7 @@
 package com.ljx.tank;
 
+import jdk.nashorn.internal.ir.ReturnNode;
+
 import java.awt.*;
 import java.util.Random;
 
@@ -13,12 +15,24 @@ public class Tank {
     private int x;
     private int y;
     private Dir dir ;
+    private TankFrame tf=null;
+    private boolean moving = false;
+
     private static final int SPEFD = 10;
+
+
 
     public Tank(int x, int y, Dir dir) {
         this.x = x;
         this.y = y;
         this.dir = dir;
+    }
+
+    public Tank(int x, int y, Dir dir, TankFrame tf) {
+        this.x = x;
+        this.y = y;
+        this.dir = dir;
+        this.tf = tf;
     }
 
     public Tank() {
@@ -47,8 +61,10 @@ public class Tank {
 
 
     public void paint(Graphics g){
-
         g.fillRect(x,y,50,50);
+        if (!moving) {
+            return;
+        }
         switch (dir){
             case LEFT:
                 x -= SPEFD;
@@ -91,5 +107,17 @@ public class Tank {
 
     public static int getSPEFD() {
         return SPEFD;
+    }
+
+    public void fire(){
+        tf.bulletList.add(new Bullet(x,y,dir,tf));
+    }
+
+    public boolean isMoving() {
+        return moving;
+    }
+
+    public void setMoving(boolean moving) {
+        this.moving = moving;
     }
 }
