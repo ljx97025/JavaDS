@@ -14,7 +14,10 @@ public class Tank {
     private Dir dir; // 方向
     private boolean moving; // 坦克移动标志
     private TankFrame tf = null;
+
     private static final int SPEFD = 10; // 坦克移动速度
+    private static final int WIDTH = ResourceMgr.tankL.getWidth();
+    private static final int HEIGTH = ResourceMgr.tankL.getHeight();
 
     public Tank(int x, int y, Dir dir, TankFrame tf) {
         this.x = x;
@@ -97,12 +100,18 @@ public class Tank {
         this.dir = dir;
     }
 
+    public static int getWIDTH() {
+        return WIDTH;
+    }
+
+    public static int getHEIGTH() {
+        return HEIGTH;
+    }
+
     /**
      * 发射子弹
      */
     public void fire() {
-        int bx = x + ResourceMgr.tankL.getWidth()/2 - Bullet.getWIDTH()/2;
-        int by = y + ResourceMgr.tankL.getHeight()/2 - Bullet.getHEIGTH()/2;
-        tf.bulletList.add(new Bullet(bx,by,dir,tf));
+        tf.bulletList.add(new Bullet(x,y,dir,tf));
     }
 }

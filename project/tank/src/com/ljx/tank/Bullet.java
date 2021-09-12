@@ -28,10 +28,32 @@ public class Bullet {
     }
 
     public Bullet(int x, int y, Dir dir, TankFrame tf) {
-        this.x = x;
-        this.y = y;
-        this.dir = dir;
+        this(x,y,dir);
         this.tf = tf;
+    }
+
+    public Bullet(int x, int y, Dir dir) {
+        this.dir = dir;
+
+        switch (this.dir) {
+            case LEFT:
+                this.x = x - Bullet.WIDTH;
+                this.y = y + Tank.getHEIGTH()/2 - Bullet.HEIGTH/2;
+                break;
+            case UP:
+                this.x = x + Tank.getWIDTH()/2 - Bullet.HEIGTH/2;
+                this.y = y - Bullet.HEIGTH;
+                break;
+            case RIGHT:
+                this.x = x + Tank.getWIDTH();
+                this.y = y + Tank.getHEIGTH()/2 - Bullet.HEIGTH/2;
+                break;
+            case DOWN:
+                this.x = x + Tank.getWIDTH()/2 - Bullet.HEIGTH/2;
+                this.y = y + Tank.getHEIGTH();
+                break;
+
+        }
     }
 
     public void paint(Graphics g){
