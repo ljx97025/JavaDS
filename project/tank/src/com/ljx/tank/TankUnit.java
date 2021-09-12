@@ -1,8 +1,8 @@
 package com.ljx.tank;
 
 import java.awt.*;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Random;
 
 /**
@@ -14,8 +14,9 @@ import java.util.Random;
 public class TankUnit {
     private ArrayList<Tank> tanks = new ArrayList();
     private int tankCount;
+    private int dieTankCount;
     private TankFrame tf = null;
-
+    private ArrayList<Tank> dieTank = new ArrayList();
     private Random random = new Random();
 
     public TankUnit(TankFrame tf, int tankCount) {
@@ -26,6 +27,10 @@ public class TankUnit {
 
     public int getTankCount() {
         return tankCount;
+    }
+
+    public int getDieTankCount() {
+        return dieTankCount;
     }
 
     public Tank getTank(int index) {
@@ -56,12 +61,30 @@ public class TankUnit {
             tank.paint(g);
         }
         removeTank();
+        dieTankExploded(g);
+    }
+
+    private void dieTankExploded(Graphics g) {
+        int length = dieTank.size();
+
+        for (Iterator<Tank> iterator = dieTank.iterator();iterator.hasNext();) {
+            Tank tank = iterator.next();
+            if (!tank.getExploded().isLiving()){
+              iterator.remove();
+              dieTankCount++;
+            }else{
+                tank.tankExploded(g);
+            }
+        }
     }
 
     public void removeTank(){
-        for (int i=0;i<this.tankCount;i++){
-            if (!tanks.get(i).isLiving()){
-                tanks.remove(i);
+
+        for (Iterator<Tank> iterator = tanks.iterator(); iterator.hasNext(); ) {
+            Tank tank = iterator.next();
+            if (!tank.isLiving()){
+                dieTank.add(tank);
+                iterator.remove();
             }
         }
         // 重置坦克数量，防止越界

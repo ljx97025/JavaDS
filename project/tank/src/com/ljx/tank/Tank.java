@@ -20,7 +20,7 @@ public class Tank {
     private boolean moving = false;
     private boolean living = true;
     private Group group;
-
+    private Explode exploded = new Explode();
     private static final int TANK_WIDTH = ResourceMgr.tankD.getWidth();
     private static final int TANK_HEIGHT = ResourceMgr.tankD.getHeight();
     private static final int SPEFD = 10;
@@ -188,5 +188,15 @@ public class Tank {
 
     public void die() {
         living = false;
+    }
+
+    public Explode getExploded() {
+        return exploded;
+    }
+
+    public void tankExploded(Graphics g) {
+        exploded.setX(x);
+        exploded.setY(y);
+        exploded.paint(g);
     }
 }

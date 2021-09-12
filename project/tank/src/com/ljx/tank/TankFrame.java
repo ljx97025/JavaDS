@@ -14,7 +14,7 @@ import java.util.List;
 public class TankFrame extends Frame {
 
     Tank mainTank = new Tank(200,200,Dir.LEFT,Group.GOOD,this);
-    TankUnit tankUnit = new TankUnit(this,2);
+    TankUnit tankUnit = new TankUnit(this,5);
     List<Bullet> bulletList = new ArrayList<>();
     static int GAME_WIDTH = 800;
     static int GAME_HEIGHT = 600;
@@ -56,6 +56,7 @@ public class TankFrame extends Frame {
         g.setColor(Color.WHITE);
         g.drawString("当前子弹数目："+bulletList.size(),30,45);
         g.drawString("敌方坦克数目："+tankUnit.getTankCount(),30,60);
+        g.drawString("死亡坦克数目："+tankUnit.getDieTankCount(),30,75);
         g.setColor(c);
         mainTank.paint(g);
         tankUnit.paint(g);
