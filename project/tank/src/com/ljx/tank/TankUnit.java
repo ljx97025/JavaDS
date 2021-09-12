@@ -43,6 +43,12 @@ public class TankUnit {
         }
     }
 
+    /** 
+     * @Author lt
+     * @Description  坦克随机方向确定
+     * @Param tank
+     * @return 
+     */
     public void randomDir(Tank tank) {
         tank.setMoving(true);
         int randomNum = new Random().nextInt(4);

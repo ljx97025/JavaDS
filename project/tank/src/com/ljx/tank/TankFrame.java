@@ -1,10 +1,7 @@
 package com.ljx.tank;
 
 import java.awt.*;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,7 +59,10 @@ public class TankFrame extends Frame {
         }
 
     }
-
+    /**
+     * @Author lt
+     * @Description 键盘监控
+     */
     class KeyListener extends KeyAdapter {
 
         boolean bl = false;
