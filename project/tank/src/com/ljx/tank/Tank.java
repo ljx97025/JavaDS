@@ -1,6 +1,7 @@
 package com.ljx.tank;
 
 import java.awt.*;
+import java.util.Random;
 
 /**
  * @ClassName : Tank
@@ -13,22 +14,27 @@ public class Tank {
     private int y; // 纵坐标
     private Dir dir; // 方向
     private boolean moving; // 坦克移动标志
+    private boolean living = true;
     private TankFrame tf = null;
+    private Group group; // 敌我分类标签
 
     private static final int SPEFD = 10; // 坦克移动速度
     private static final int WIDTH = ResourceMgr.tankL.getWidth();
     private static final int HEIGTH = ResourceMgr.tankL.getHeight();
 
-    public Tank(int x, int y, Dir dir, TankFrame tf) {
+    public Tank(int x, int y, Dir dir, Group group,TankFrame tf) {
         this.x = x;
         this.y = y;
         this.dir = dir;
+        this.group = group;
         this.tf = tf;
     }
 
 
     public void paint(Graphics g){
-
+        if (!living) {
+            tf.tanks.remove(this);
+        }
         switch (dir){
             case LEFT:
                 g.drawImage(ResourceMgr.tankL,x,y,null);
@@ -108,10 +114,18 @@ public class Tank {
         return HEIGTH;
     }
 
+    public Group getGroup() {
+        return group;
+    }
+
     /**
      * 发射子弹
      */
     public void fire() {
-        tf.bulletList.add(new Bullet(x,y,dir,tf));
+        tf.bulletList.add(new Bullet(x,y,dir,Group.GOOD,tf));
+    }
+
+    public void die() {
+        this.living = false;
     }
 }

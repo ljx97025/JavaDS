@@ -12,6 +12,7 @@ public class Bullet {
     private int x;
     private int y;
     private Dir dir;
+    private Group group;
     private TankFrame tf;
     private boolean living = true;
 
@@ -27,9 +28,10 @@ public class Bullet {
         return HEIGTH;
     }
 
-    public Bullet(int x, int y, Dir dir, TankFrame tf) {
+    public Bullet(int x, int y, Dir dir, Group group, TankFrame tf) {
         this(x,y,dir);
         this.tf = tf;
+        this.group = group;
     }
 
     public Bullet(int x, int y, Dir dir) {
@@ -99,4 +101,28 @@ public class Bullet {
         }
     }
 
+    /**
+     * @Author lt
+     * @Description 子弹与坦克的碰撞检测
+     * @Param tank
+     * @return
+     */
+    public void collideWith(Tank tank) {
+        // 如果子弹是自己的或者是队友则，伤害无效
+        if (this.group == tank.getGroup()){
+            return;
+        }
+        // 分别绘制子弹与坦克的矩形
+        Rectangle rectB = new Rectangle(this.x, this.y, WIDTH, HEIGTH);
+        Rectangle rectT = new Rectangle(tank.getX(), tank.getY(), Tank.getWIDTH(), Tank.getHEIGTH());
+        // 检查子弹与坦克矩形是否交叉，交叉则子弹与坦克均消失
+        if (rectB.intersects(rectT)){
+            this.die();
+            tank.die();
+        }
+    }
+
+    private void die() {
+        this.living = false;
+    }
 }

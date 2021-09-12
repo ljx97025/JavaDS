@@ -16,12 +16,12 @@ import java.util.List;
  */
 public class TankFrame extends Frame {
 
-    Tank mainTank = new Tank(200,200,Dir.LEFT,this);
+    Tank mainTank = new Tank(200,500,Dir.LEFT,Group.GOOD,this);
     List<Bullet> bulletList = new ArrayList();
-
+    List<Tank> tanks = new ArrayList<Tank>();
     static int GAME_WIDTH=800;
     static int GAME_HEIGHT=600;
-
+    Explode explode = new Explode(100,100,this);
     public TankFrame(){
         setSize(GAME_WIDTH,GAME_HEIGHT);
         setResizable(false);
@@ -45,7 +45,7 @@ public class TankFrame extends Frame {
         }
         Graphics gOffScreen = offScreenImage.getGraphics();
         Color c = gOffScreen.getColor();
-        gOffScreen.setColor(Color.WHITE);
+        gOffScreen.setColor(Color.BLACK);
         gOffScreen.fillRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
         gOffScreen.setColor(c);
         paint(gOffScreen);
@@ -55,14 +55,27 @@ public class TankFrame extends Frame {
     @Override
     public void paint(Graphics g) {
         Color c = g.getColor();
-        g.setColor(Color.BLACK);
-        g.drawString("剩余子弹数："+bulletList.size(),50,50);
+        g.setColor(Color.WHITE);
+        g.drawString("剩余子弹数："+bulletList.size(),10,50);
+        g.drawString("剩余敌方数："+tanks.size(),10,70);
         g.setColor(c);
         mainTank.paint(g);
         for (int i=0;i<bulletList.size();i++){
             bulletList.get(i).paint(g);
         }
+        for (int i=0;i<tanks.size();i++){
+            tanks.get(i).paint(g);
+        }
 
+        // 子弹撞击坦克检测
+        for (int i=0;i<bulletList.size();i++){
+            for (int j=0;j<tanks.size();j++){
+                bulletList.get(i).collideWith(tanks.get(j));
+            }
+
+        }
+
+        explode.paint(g);
     }
 
     class KeyListener extends KeyAdapter {
