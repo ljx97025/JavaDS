@@ -26,7 +26,21 @@ public class Tank {
 
     public void paint(Graphics g){
 
-        g.fillRect(x,y,50,50);
+        switch (dir){
+            case LEFT:
+                g.drawImage(ResourceMgr.tankL,x,y,null);
+                break;
+            case RIGHT:
+                g.drawImage(ResourceMgr.tankR,x,y,null);
+                break;
+            case DOWN:
+                g.drawImage(ResourceMgr.tankD,x,y,null);
+                break;
+            case UP:
+                g.drawImage(ResourceMgr.tankU,x,y,null);
+                break;
+        }
+
         move();
     }
 
@@ -87,6 +101,8 @@ public class Tank {
      * 发射子弹
      */
     public void fire() {
-        tf.bulletList.add(new Bullet(x,y,dir,tf));
+        int bx = x + ResourceMgr.tankL.getWidth()/2 - Bullet.getWIDTH()/2;
+        int by = y + ResourceMgr.tankL.getHeight()/2 - Bullet.getHEIGTH()/2;
+        tf.bulletList.add(new Bullet(bx,by,dir,tf));
     }
 }

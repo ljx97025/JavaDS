@@ -16,8 +16,16 @@ public class Bullet {
     private boolean living = true;
 
     private static final int SPEFD = 15;
-    private static final int WIDTH = 25;
-    private static final int HEIGTH = 25;
+    private static final int WIDTH = ResourceMgr.bulletL.getWidth();
+    private static final int HEIGTH = ResourceMgr.bulletL.getHeight();
+
+    public static int getWIDTH() {
+        return WIDTH;
+    }
+
+    public static int getHEIGTH() {
+        return HEIGTH;
+    }
 
     public Bullet(int x, int y, Dir dir, TankFrame tf) {
         this.x = x;
@@ -30,10 +38,20 @@ public class Bullet {
         if (!living) {
             tf.bulletList.remove(this);
         }
-        Color c = g.getColor();
-        g.setColor(Color.RED);
-        g.fillOval(x,y,WIDTH,HEIGTH);
-        g.setColor(c);
+        switch (dir){
+            case LEFT:
+                g.drawImage(ResourceMgr.bulletL,x,y,null);
+                break;
+            case RIGHT:
+                g.drawImage(ResourceMgr.bulletR,x,y,null);
+                break;
+            case DOWN:
+                g.drawImage(ResourceMgr.bulletD,x,y,null);
+                break;
+            case UP:
+                g.drawImage(ResourceMgr.bulletU,x,y,null);
+                break;
+        }
         move();
     }
 
