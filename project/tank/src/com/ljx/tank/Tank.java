@@ -1,6 +1,7 @@
 package com.ljx.tank;
 
 import jdk.nashorn.internal.ir.ReturnNode;
+import sun.security.util.ResourcesMgr;
 
 import java.awt.*;
 import java.util.Random;
@@ -17,9 +18,11 @@ public class Tank {
     private Dir dir ;
     private TankFrame tf=null;
     private boolean moving = false;
+    private boolean living = true;
+    private Group group;
 
-    private static final int TANK_WIDTH = 50;
-    private static final int TANK_HEIGHT = 50;
+    private static final int TANK_WIDTH = ResourceMgr.tankD.getWidth();
+    private static final int TANK_HEIGHT = ResourceMgr.tankD.getHeight();
     private static final int SPEFD = 10;
 
 
@@ -30,16 +33,17 @@ public class Tank {
         this.dir = dir;
     }
 
-    public Tank(int x, int y, Dir dir, TankFrame tf) {
+    public Tank(int x, int y, Dir dir, Group group, TankFrame tf) {
         this.x = x;
         this.y = y;
+        this.group = group;
         this.dir = dir;
         this.tf = tf;
     }
 
-    public Tank(TankFrame tf) {
+    public Tank(Group group, TankFrame tf) {
         this.tf = tf;
-
+        this.group = group;
         Random xr = new Random();
         Random yr = new Random();
         this.x = xr.nextInt(TankFrame.GAME_WIDTH);
@@ -65,7 +69,21 @@ public class Tank {
 
 
     public void paint(Graphics g){
-        g.fillRect(x,y,TANK_WIDTH,TANK_HEIGHT);
+        switch (dir){
+            case LEFT:
+                g.drawImage(ResourceMgr.tankL,x,y,null);
+                break;
+            case UP:
+                g.drawImage(ResourceMgr.tankU,x,y,null);
+                break;
+            case RIGHT:
+                g.drawImage(ResourceMgr.tankR,x,y,null);
+                break;
+            case DOWN:
+                g.drawImage(ResourceMgr.tankD,x,y,null);
+                break;
+        }
+
         move();
     }
 
@@ -141,7 +159,7 @@ public class Tank {
     }
 
     public void fire(){
-        tf.bulletList.add(new Bullet(x,y,dir,tf));
+        tf.bulletList.add(new Bullet(x,y,dir,group,tf));
     }
 
     public boolean isMoving() {
@@ -158,5 +176,17 @@ public class Tank {
 
     public void setMoving(boolean moving) {
         this.moving = moving;
+    }
+
+    public Group getGroup() {
+        return group;
+    }
+
+    public boolean isLiving() {
+        return living;
+    }
+
+    public void die() {
+        living = false;
     }
 }

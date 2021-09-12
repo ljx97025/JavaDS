@@ -16,10 +16,20 @@ public class TankUnit {
     private int tankCount;
     private TankFrame tf = null;
 
+    private Random random = new Random();
+
     public TankUnit(TankFrame tf, int tankCount) {
         this.tf = tf;
         this.tankCount = tankCount;
         createTanks();
+    }
+
+    public int getTankCount() {
+        return tankCount;
+    }
+
+    public Tank getTank(int index) {
+        return tanks.get(index);
     }
 
     public void createTanks(){
@@ -29,7 +39,7 @@ public class TankUnit {
         }
 
         for (int i=0;i<this.tankCount;i++){
-            tanks.add(new Tank(tf));
+            tanks.add(new Tank(Group.BAD,tf));
         }
     }
 
@@ -37,10 +47,25 @@ public class TankUnit {
         Tank tank = null;
         for (int i=0;i<this.tankCount;i++){
             tank = tanks.get(i);
-            randomDir(tank);
-            tank.fire();
+            if (random.nextInt(10)>8){
+                randomDir(tank);
+            }
+            if (random.nextInt(8)>5){
+                tank.fire();
+            }
             tank.paint(g);
         }
+        removeTank();
+    }
+
+    public void removeTank(){
+        for (int i=0;i<this.tankCount;i++){
+            if (!tanks.get(i).isLiving()){
+                tanks.remove(i);
+            }
+        }
+        // 重置坦克数量，防止越界
+        this.tankCount = tanks.size();
     }
 
     /** 

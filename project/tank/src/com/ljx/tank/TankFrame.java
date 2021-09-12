@@ -13,7 +13,7 @@ import java.util.List;
  */
 public class TankFrame extends Frame {
 
-    Tank mainTank = new Tank(200,200,Dir.LEFT,this);
+    Tank mainTank = new Tank(200,200,Dir.LEFT,Group.GOOD,this);
     TankUnit tankUnit = new TankUnit(this,2);
     List<Bullet> bulletList = new ArrayList<>();
     static int GAME_WIDTH = 800;
@@ -43,7 +43,7 @@ public class TankFrame extends Frame {
         }
         Graphics gOffScreen = offScreenImage.getGraphics();
         Color c = gOffScreen.getColor();
-        gOffScreen.setColor(Color.WHITE);
+        gOffScreen.setColor(Color.BLACK);
         gOffScreen.fillRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
         gOffScreen.setColor(c);
         paint(gOffScreen);
@@ -52,10 +52,20 @@ public class TankFrame extends Frame {
 
     @Override
     public void paint(Graphics g) {
+        Color c = g.getColor();
+        g.setColor(Color.WHITE);
+        g.drawString("当前子弹数目："+bulletList.size(),30,45);
+        g.drawString("敌方坦克数目："+tankUnit.getTankCount(),30,60);
+        g.setColor(c);
         mainTank.paint(g);
         tankUnit.paint(g);
         for (int i=0;i<bulletList.size();i++) {
             bulletList.get(i).paint(g);
+        }
+        for (int i=0;i<bulletList.size();i++){
+            for (int j=0;j<tankUnit.getTankCount();j++){
+                bulletList.get(i).collideWith(tankUnit.getTank(j));
+            }
         }
 
     }

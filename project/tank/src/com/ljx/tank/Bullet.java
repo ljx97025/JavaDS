@@ -14,13 +14,14 @@ public class Bullet {
     private Dir dir;
     private boolean living = true;
     private TankFrame tf=null;
+    private Group group;
+    private static final int BULLET_WIDTH = ResourceMgr.bulletD.getWidth();
+    private static final int BULLET_HEIGHT = ResourceMgr.bulletD.getHeight();
+    private static final int SPEFD = 15;
 
-    private static final int BULLET_WIDTH = 25;
-    private static final int BULLET_HEIGHT = 25;
-    private static final int SPEFD = 20;
-
-    public Bullet(int x, int y, Dir dir, TankFrame tf) {
+    public Bullet(int x, int y, Dir dir, Group group,TankFrame tf) {
         this(x, y, dir);
+        this.group = group;
         this.dir = dir;
         this.tf = tf;
     }
@@ -51,10 +52,23 @@ public class Bullet {
             tf.bulletList.remove(this);
         }
 
-        Color c = g.getColor();
-        g.setColor(Color.RED);
-        g.fillOval(x,y,BULLET_WIDTH,BULLET_HEIGHT);
-        g.setColor(c);
+        switch (dir){
+            case LEFT:
+                g.drawImage(ResourceMgr.bulletL,x,y,null);
+                break;
+            case UP:
+                g.drawImage(ResourceMgr.bulletU,x,y,null);
+                break;
+            case RIGHT:
+                g.drawImage(ResourceMgr.bulletR,x,y,null);
+                break;
+            case DOWN:
+                g.drawImage(ResourceMgr.bulletD,x,y,null);
+                break;
+        }
+
+
+
         move();
     }
 
@@ -76,5 +90,31 @@ public class Bullet {
         if (x<0 || y<0 || x>tf.GAME_WIDTH || y>tf.GAME_HEIGHT) {
             living = false;
         }
+    }
+
+    /**
+     * @Author lt
+     * @Description 坦克与子弹碰撞检测
+     * @Param tank
+     * @return 
+     */
+    public void collideWith(Tank tank) {
+
+        if (this.group == tank.getGroup()) {
+            return;
+        }
+
+        Rectangle rectB = new Rectangle(x,y,BULLET_WIDTH,BULLET_HEIGHT);
+        Rectangle rectT = new Rectangle(tank.getX(),tank.getY(),Tank.getTankWidth(),Tank.getTankHeight());
+
+        if (rectB.intersects(rectT)){
+            this.die();
+            tank.die();
+        }
+
+    }
+
+    private void die() {
+        living = false;
     }
 }
