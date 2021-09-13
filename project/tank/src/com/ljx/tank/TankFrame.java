@@ -52,21 +52,45 @@ public class TankFrame extends Frame {
 
     @Override
     public void paint(Graphics g) {
+        boolean explodeFlag;
         Color c = g.getColor();
+        Font f = g.getFont();
         g.setColor(Color.WHITE);
         g.drawString("当前子弹数目："+bulletList.size(),30,45);
         g.drawString("敌方坦克数目："+tankUnit.getTankCount(),30,60);
         g.drawString("死亡坦克数目："+tankUnit.getDieTankCount(),30,75);
         g.setColor(c);
-        mainTank.paint(g);
-        tankUnit.paint(g);
-        for (int i=0;i<bulletList.size();i++) {
-            bulletList.get(i).paint(g);
-        }
-        for (int i=0;i<bulletList.size();i++){
-            for (int j=0;j<tankUnit.getTankCount();j++){
-                bulletList.get(i).collideWith(tankUnit.getTank(j));
+        if (mainTank.isLiving()) {
+            mainTank.paint(g);
+            tankUnit.paint(g);
+            for (int i=0;i<bulletList.size();i++) {
+                bulletList.get(i).paint(g);
             }
+            for (int i=0;i<bulletList.size();i++){
+                for (int j=0;j<tankUnit.getTankCount();j++){
+                    explodeFlag = bulletList.get(i).collideWith(tankUnit.getTank(j));
+                    if (explodeFlag){
+                        break;
+                    }
+                }
+            }
+
+            for (int i=0;i<bulletList.size();i++) {
+                explodeFlag = bulletList.get(i).collideWith(mainTank);
+                if (explodeFlag){
+                    break;
+                }
+            }
+
+        } else {
+            g.fillRect(0,0,GAME_WIDTH,GAME_HEIGHT);
+            mainTank.tankExploded(g);
+            c = g.getColor();
+            g.setColor(Color.RED);
+            g.setFont(new Font("TimesRoman",Font.BOLD,14));
+            g.drawString("GAME OVER",GAME_WIDTH/2,GAME_HEIGHT/2);
+            g.setFont(f);
+            g.setColor(c);
         }
 
     }

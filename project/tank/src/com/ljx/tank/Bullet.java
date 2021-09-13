@@ -98,10 +98,10 @@ public class Bullet {
      * @Param tank
      * @return 
      */
-    public void collideWith(Tank tank) {
+    public boolean collideWith(Tank tank) {
 
         if (this.group == tank.getGroup()) {
-            return;
+            return false;
         }
 
         Rectangle rectB = new Rectangle(x,y,BULLET_WIDTH,BULLET_HEIGHT);
@@ -110,8 +110,9 @@ public class Bullet {
         if (rectB.intersects(rectT)){
             this.die();
             tank.die();
+            return true;
         }
-
+        return false;
     }
 
     private void die() {
