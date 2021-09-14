@@ -65,7 +65,6 @@ public class TankUnit {
     }
 
     private void dieTankExploded(Graphics g) {
-        int length = dieTank.size();
 
         for (Iterator<Tank> iterator = dieTank.iterator();iterator.hasNext();) {
             Tank tank = iterator.next();
@@ -100,19 +99,20 @@ public class TankUnit {
     public void randomDir(Tank tank) {
         tank.setMoving(true);
         int randomNum = new Random().nextInt(4);
-        switch(randomNum % 4){
-            case 0:
-                tank.setDir(Dir.LEFT);
-                break;
-            case 1:
-                tank.setDir(Dir.UP);
-                break;
-            case 2:
-                tank.setDir(Dir.RIGHT);
-                break;
-            case 3:
-                tank.setDir(Dir.DOWN);
-                break;
-        }
+//        switch(randomNum % 4){
+//            case 0:
+//                tank.setDir(Dir.LEFT);
+//                break;
+//            case 1:
+//                tank.setDir(Dir.UP);
+//                break;
+//            case 2:
+//                tank.setDir(Dir.RIGHT);
+//                break;
+//            case 3:
+//                tank.setDir(Dir.DOWN);
+//                break;
+//        }
+        tank.setDir(Dir.values()[randomNum]);
     }
 }

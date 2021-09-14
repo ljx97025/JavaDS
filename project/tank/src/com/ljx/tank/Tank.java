@@ -49,20 +49,22 @@ public class Tank {
         this.x = xr.nextInt(TankFrame.GAME_WIDTH);
         this.y = yr.nextInt(TankFrame.GAME_HEIGHT);
 
-        switch((x+y)%4){
-            case 0:
-                this.dir = Dir.LEFT;
-                break;
-            case 1:
-                this.dir = Dir.UP;
-                break;
-            case 2:
-                this.dir = Dir.RIGHT;
-                break;
-            case 3:
-                this.dir = Dir.DOWN;
-                break;
-        }
+//        switch((x+y)%4){
+//            case 0:
+//                this.dir = Dir.LEFT;
+//                break;
+//            case 1:
+//                this.dir = Dir.UP;
+//                break;
+//            case 2:
+//                this.dir = Dir.RIGHT;
+//                break;
+//            case 3:
+//                this.dir = Dir.DOWN;
+//                break;
+//        }
+
+        this.dir = Dir.values()[(x+y)%4];
 
     }
 
