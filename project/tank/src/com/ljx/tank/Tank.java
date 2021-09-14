@@ -18,6 +18,8 @@ public class Tank {
     private TankFrame tf = null;
     private Group group; // 敌我分类标签
 
+    private Random random = new Random();
+
     private static final int SPEFD = 10; // 坦克移动速度
     private static final int WIDTH = ResourceMgr.tankL.getWidth();
     private static final int HEIGTH = ResourceMgr.tankL.getHeight();
@@ -72,6 +74,19 @@ public class Tank {
                 y += SPEFD;
                 break;
         }
+
+        if (group==Group.BAD && random.nextInt(100)>90){
+            fire();
+        }
+
+        if (group==Group.BAD && random.nextInt(100)>95){
+            randomDir();
+        }
+
+    }
+
+    private void randomDir() {
+        this.dir = Dir.values()[random.nextInt(4)];
     }
 
     public boolean isMoving() {

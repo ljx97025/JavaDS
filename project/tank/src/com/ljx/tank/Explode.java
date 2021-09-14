@@ -37,8 +37,10 @@ public class Explode {
 
     public void paint(Graphics g){
         g.drawImage(ResourceMgr.exploded[step++],x,y,null);
+        // 当爆炸结束时，移除该爆炸对象
         if (step >= ResourceMgr.exploded.length){
-            step=0;
+            tf.explodes.remove(this);
+            step = 0;
         }
     }
 

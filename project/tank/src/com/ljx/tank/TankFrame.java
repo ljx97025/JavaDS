@@ -19,8 +19,9 @@ public class TankFrame extends Frame {
     Tank mainTank = new Tank(200,500,Dir.LEFT,Group.GOOD,this);
     List<Bullet> bulletList = new ArrayList();
     List<Tank> tanks = new ArrayList<Tank>();
-    static int GAME_WIDTH=800;
-    static int GAME_HEIGHT=600;
+    List<Explode> explodes = new ArrayList();
+    static int GAME_WIDTH=1080;
+    static int GAME_HEIGHT=960;
     Explode explode = new Explode(100,100,this);
     public TankFrame(){
         setSize(GAME_WIDTH,GAME_HEIGHT);
@@ -64,7 +65,12 @@ public class TankFrame extends Frame {
             bulletList.get(i).paint(g);
         }
         for (int i=0;i<tanks.size();i++){
+            tanks.get(i).setMoving(true);
             tanks.get(i).paint(g);
+        }
+        //绘制爆炸
+        for (int i=0;i<explodes.size();i++){
+            explodes.get(i).paint(g);
         }
 
         // 子弹撞击坦克检测
