@@ -13,7 +13,7 @@ public class Main {
            tankFrame.tanks.add(new Tank(50+i*80,200,Dir.DOWN,Group.BAD,tankFrame));
        }
        while (true){
-           Thread.sleep(25);
+           Thread.sleep(50);
            tankFrame.repaint();
        }
     }

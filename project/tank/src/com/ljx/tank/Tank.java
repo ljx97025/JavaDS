@@ -21,8 +21,10 @@ public class Tank {
     private Random random = new Random();
 
     private static final int SPEFD = 10; // 坦克移动速度
-    private static final int WIDTH = ResourceMgr.tankL.getWidth();
-    private static final int HEIGTH = ResourceMgr.tankL.getHeight();
+    private static final int WIDTH = ResourceMgr.goodTankU.getWidth();
+    private static final int HEIGTH = ResourceMgr.goodTankU.getHeight();
+
+    Rectangle rectT = new Rectangle();
 
     public Tank(int x, int y, Dir dir, Group group,TankFrame tf) {
         this.x = x;
@@ -30,6 +32,12 @@ public class Tank {
         this.dir = dir;
         this.group = group;
         this.tf = tf;
+
+        rectT.x = x;
+        rectT.y = y;
+        rectT.width = WIDTH;
+        rectT.height = HEIGTH;
+
     }
 
 
@@ -39,16 +47,16 @@ public class Tank {
         }
         switch (dir){
             case LEFT:
-                g.drawImage(ResourceMgr.tankL,x,y,null);
+                g.drawImage(group==Group.GOOD ? ResourceMgr.goodTankL : ResourceMgr.badTankL,x,y,null);
                 break;
             case RIGHT:
-                g.drawImage(ResourceMgr.tankR,x,y,null);
+                g.drawImage(group==Group.GOOD ? ResourceMgr.goodTankR : ResourceMgr.badTankR,x,y,null);
                 break;
             case DOWN:
-                g.drawImage(ResourceMgr.tankD,x,y,null);
+                g.drawImage(group==Group.GOOD ? ResourceMgr.goodTankD : ResourceMgr.badTankD,x,y,null);
                 break;
             case UP:
-                g.drawImage(ResourceMgr.tankU,x,y,null);
+                g.drawImage(group==Group.GOOD ? ResourceMgr.goodTankU : ResourceMgr.badTankU,x,y,null);
                 break;
         }
 
@@ -83,6 +91,32 @@ public class Tank {
             randomDir();
         }
 
+        boundChecked();
+
+        rectT.x = x;
+        rectT.y = y;
+
+    }
+
+    /**
+     * @Author lt
+     * @Description 边界检测
+     * @Param
+     * @return
+     */
+    private void boundChecked() {
+        if (x < 2) {
+            x = 2;
+        }
+        if (y < 32){
+            y = 32;
+        }
+        if (x > (TankFrame.GAME_WIDTH-Tank.WIDTH-2)) {
+            x = TankFrame.GAME_WIDTH-Tank.WIDTH -2;
+        }
+        if (y > (TankFrame.GAME_HEIGHT-Tank.HEIGTH-2)) {
+            y = TankFrame.GAME_HEIGHT-Tank.HEIGTH -2;
+        }
     }
 
     private void randomDir() {
@@ -137,7 +171,7 @@ public class Tank {
      * 发射子弹
      */
     public void fire() {
-        tf.bulletList.add(new Bullet(x,y,dir,Group.GOOD,tf));
+        tf.bulletList.add(new Bullet(x,y,dir,group,tf));
     }
 
     public void die() {

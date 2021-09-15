@@ -15,7 +15,7 @@ public class Bullet {
     private Group group;
     private TankFrame tf;
     private boolean living = true;
-
+    Rectangle rectB = new Rectangle();
     private static final int SPEFD = 15;
     private static final int WIDTH = ResourceMgr.bulletL.getWidth();
     private static final int HEIGTH = ResourceMgr.bulletL.getHeight();
@@ -32,6 +32,10 @@ public class Bullet {
         this(x,y,dir);
         this.tf = tf;
         this.group = group;
+        rectB.x = x;
+        rectB.y = y;
+        rectB.width = WIDTH;
+        rectB.height = HEIGTH;
     }
 
     public Bullet(int x, int y, Dir dir) {
@@ -99,6 +103,10 @@ public class Bullet {
         if (x<0 || y<0 || x>tf.GAME_WIDTH || y>tf.GAME_HEIGHT) {
             living = false;
         }
+
+        rectB.x = x;
+        rectB.y = y;
+
     }
 
     /**
@@ -112,14 +120,17 @@ public class Bullet {
         if (this.group == tank.getGroup()){
             return;
         }
-        // 分别绘制子弹与坦克的矩形
-        Rectangle rectB = new Rectangle(this.x, this.y, WIDTH, HEIGTH);
-        Rectangle rectT = new Rectangle(tank.getX(), tank.getY(), Tank.getWIDTH(), Tank.getHEIGTH());
+        // 分别绘制子弹与坦克的矩形 每调用一次创建两个对象，会导致创建对象越来越多
+        // 为解决该问题，将rect放置 tank bullet中作为属性
+//        Rectangle rectB = new Rectangle(this.x, this.y, WIDTH, HEIGTH);
+//        Rectangle rectT = new Rectangle(tank.getX(), tank.getY(), Tank.getWIDTH(), Tank.getHEIGTH());
         // 检查子弹与坦克矩形是否交叉，交叉则子弹与坦克均消失
-        if (rectB.intersects(rectT)){
+        if (rectB.intersects(tank.rectT)){
             this.die();
             tank.die();
-            tf.explodes.add(new Explode(x,y,tf));
+            int ex = tank.getX() + Tank.getWIDTH()/2 - Explode.getWIDTH()/2;
+            int ey = tank.getY() + Tank.getHEIGTH()/2 - Explode.getHEIGTH()/2;
+            tf.explodes.add(new Explode(ex,ey,tf));
         }
     }
 

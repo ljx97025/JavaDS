@@ -29,7 +29,7 @@ public class ImageTest {
 
     @Test
     public void ResourceMgrTest(){
-        Assert.assertNotNull(ResourceMgr.tankU);
+        Assert.assertNotNull(ResourceMgr.goodTankU);
 
     }
 }

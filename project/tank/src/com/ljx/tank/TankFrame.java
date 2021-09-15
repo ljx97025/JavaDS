@@ -22,7 +22,7 @@ public class TankFrame extends Frame {
     List<Explode> explodes = new ArrayList();
     static int GAME_WIDTH=1080;
     static int GAME_HEIGHT=960;
-    Explode explode = new Explode(100,100,this);
+
     public TankFrame(){
         setSize(GAME_WIDTH,GAME_HEIGHT);
         setResizable(false);
@@ -81,7 +81,7 @@ public class TankFrame extends Frame {
 
         }
 
-        explode.paint(g);
+
     }
 
     class KeyListener extends KeyAdapter {

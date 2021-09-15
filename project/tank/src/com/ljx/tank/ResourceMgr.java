@@ -11,17 +11,23 @@ import java.io.IOException;
  * @Description : 资源加载
  */
 public class ResourceMgr {
-    public static BufferedImage tankR=null,tankL=null,tankU=null,tankD=null;
+    public static BufferedImage goodTankR=null,goodTankL=null,goodTankU=null,goodTankD=null;
+    public static BufferedImage badTankR=null,badTankL=null,badTankU=null,badTankD=null;
     public static BufferedImage bulletR=null,bulletL=null,bulletU=null,bulletD=null;
     public static BufferedImage[] exploded = new BufferedImage[16];
 
 
     static {
         try {
-            tankU = ImageIO.read(ResourceMgr.class.getClassLoader().getResourceAsStream("com/ljx/images/GoodTank1.png"));
-            tankR = ImageUtil.rotateImage(tankU,90);
-            tankL = ImageUtil.rotateImage(tankU,-90);
-            tankD = ImageUtil.rotateImage(tankU,180);
+            goodTankU = ImageIO.read(ResourceMgr.class.getClassLoader().getResourceAsStream("com/ljx/images/GoodTank1.png"));
+            goodTankR = ImageUtil.rotateImage(goodTankU,90);
+            goodTankL = ImageUtil.rotateImage(goodTankU,-90);
+            goodTankD = ImageUtil.rotateImage(goodTankU,180);
+
+            badTankU = ImageIO.read(ResourceMgr.class.getClassLoader().getResourceAsStream("com/ljx/images/BadTank1.png"));
+            badTankR = ImageUtil.rotateImage(badTankU,90);
+            badTankL = ImageUtil.rotateImage(badTankU,-90);
+            badTankD = ImageUtil.rotateImage(badTankU,180);
 
             bulletU = ImageIO.read(ResourceMgr.class.getClassLoader().getResourceAsStream("com/ljx/images/bulletU.png"));
             bulletR = ImageUtil.rotateImage(bulletU,90);
