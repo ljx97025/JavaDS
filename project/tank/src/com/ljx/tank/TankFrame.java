@@ -59,13 +59,14 @@ public class TankFrame extends Frame {
         g.setColor(Color.WHITE);
         g.drawString("剩余子弹数："+bulletList.size(),10,50);
         g.drawString("剩余敌方数："+tanks.size(),10,70);
+        g.drawString("tank x,y："+mainTank.getX()+","+mainTank.getY(),10,90);
         g.setColor(c);
         mainTank.paint(g);
         for (int i=0;i<bulletList.size();i++){
             bulletList.get(i).paint(g);
         }
         for (int i=0;i<tanks.size();i++){
-            tanks.get(i).setMoving(true);
+            tanks.get(i).setMoving(true); // 保证敌方坦克可以移动
             tanks.get(i).paint(g);
         }
         //绘制爆炸

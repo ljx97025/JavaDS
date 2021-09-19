@@ -83,11 +83,11 @@ public class Tank {
                 break;
         }
 
-        if (group==Group.BAD && random.nextInt(100)>90){
+        if (group==Group.BAD && random.nextInt(100)>95){
             fire();
         }
 
-        if (group==Group.BAD && random.nextInt(100)>95){
+        if (group==Group.BAD && random.nextInt(100)>90){
             randomDir();
         }
 

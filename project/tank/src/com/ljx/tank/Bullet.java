@@ -32,8 +32,8 @@ public class Bullet {
         this(x,y,dir);
         this.tf = tf;
         this.group = group;
-        rectB.x = x;
-        rectB.y = y;
+        rectB.x = this.x;
+        rectB.y = this.y;
         rectB.width = WIDTH;
         rectB.height = HEIGTH;
     }
@@ -116,10 +116,6 @@ public class Bullet {
      * @return
      */
     public void collideWith(Tank tank) {
-        // 如果子弹是自己的或者是队友则，伤害无效
-        if (this.group == tank.getGroup()){
-            return;
-        }
         // 分别绘制子弹与坦克的矩形 每调用一次创建两个对象，会导致创建对象越来越多
         // 为解决该问题，将rect放置 tank bullet中作为属性
 //        Rectangle rectB = new Rectangle(this.x, this.y, WIDTH, HEIGTH);
@@ -127,6 +123,10 @@ public class Bullet {
         // 检查子弹与坦克矩形是否交叉，交叉则子弹与坦克均消失
         if (rectB.intersects(tank.rectT)){
             this.die();
+            // 如果子弹是自己的或者是队友则，伤害无效
+            if (this.group == tank.getGroup()) {
+                return ;
+            }
             tank.die();
             int ex = tank.getX() + Tank.getWIDTH()/2 - Explode.getWIDTH()/2;
             int ey = tank.getY() + Tank.getHEIGTH()/2 - Explode.getHEIGTH()/2;
