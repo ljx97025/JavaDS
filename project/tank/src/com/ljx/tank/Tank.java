@@ -1,6 +1,10 @@
 package com.ljx.tank;
 
+import com.ljx.tank.strategy.DefaultFireStrategy;
+import com.ljx.tank.strategy.FireStrategy;
+
 import java.awt.*;
+import java.lang.reflect.Method;
 import java.util.Random;
 
 /**
@@ -17,7 +21,7 @@ public class Tank {
     private boolean living = true;
     private TankFrame tf = null;
     private Group group; // 敌我分类标签
-
+    FireStrategy fireStrategy = DefaultFireStrategy.getInstance(); // 子弹发射策略
     private Random random = new Random();
 
     private static final int SPEFD = 10; // 坦克移动速度
@@ -38,6 +42,19 @@ public class Tank {
         rectT.width = WIDTH;
         rectT.height = HEIGTH;
 
+        String fireStrategryName = null;
+        if (group == Group.GOOD){
+            fireStrategryName = (String)PropertiesMgr.get("goodTankFireStrategy");
+        } else {
+            fireStrategryName = (String)PropertiesMgr.get("badTankFireStrategy");
+        }
+        try {
+            Class strategyClass = Class.forName(fireStrategryName);
+            Method getInstance =  strategyClass.getMethod("getInstance",null);
+            fireStrategy = (FireStrategy) getInstance.invoke(null, null);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -167,11 +184,16 @@ public class Tank {
         return group;
     }
 
+    public TankFrame getTf() {
+        return tf;
+    }
+
     /**
      * 发射子弹
      */
     public void fire() {
-        tf.bulletList.add(new Bullet(x,y,dir,group,tf));
+//        tf.bulletList.add(new Bullet(x,y,dir,group,tf));
+        fireStrategy.fire(this);
     }
 
     public void die() {

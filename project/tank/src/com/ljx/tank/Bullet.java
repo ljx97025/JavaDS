@@ -36,6 +36,7 @@ public class Bullet {
         rectB.y = this.y;
         rectB.width = WIDTH;
         rectB.height = HEIGTH;
+        tf.bulletList.add(this); // 创建一个子弹，自动加入子弹队列
     }
 
     public Bullet(int x, int y, Dir dir) {
