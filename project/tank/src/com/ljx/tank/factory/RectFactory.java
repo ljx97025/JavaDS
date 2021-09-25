@@ -13,8 +13,8 @@ import com.ljx.tank.TankFrame;
  */
 public class RectFactory extends GameFactory {
     @Override
-    public BaseTank createTank() {
-        return null;
+    public BaseTank createTank(int x, int y, Dir dir, Group group,TankFrame tf) {
+        return new RectTank(x,y,dir,group,tf);
     }
 
     @Override

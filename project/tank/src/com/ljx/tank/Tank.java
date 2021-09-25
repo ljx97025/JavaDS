@@ -1,5 +1,6 @@
 package com.ljx.tank;
 
+import com.ljx.tank.factory.BaseTank;
 import com.ljx.tank.strategy.DefaultFireStrategy;
 import com.ljx.tank.strategy.FireStrategy;
 
@@ -13,14 +14,11 @@ import java.util.Random;
  * @Date: 2021/9/10 23:48
  * @Description : 坦克类
  */
-public class Tank {
-    private int x; // 横坐标
-    private int y; // 纵坐标
-    private Dir dir; // 方向
-    private boolean moving; // 坦克移动标志
+public class Tank extends BaseTank {
+
     private boolean living = true;
     private TankFrame tf = null;
-    private Group group; // 敌我分类标签
+
     FireStrategy fireStrategy = DefaultFireStrategy.getInstance(); // 子弹发射策略
     private Random random = new Random();
 
@@ -28,14 +26,11 @@ public class Tank {
     private static final int WIDTH = ResourceMgr.goodTankU.getWidth();
     private static final int HEIGTH = ResourceMgr.goodTankU.getHeight();
 
-    public Rectangle rectT = new Rectangle();
+
 
     public Tank(int x, int y, Dir dir, Group group,TankFrame tf) {
-        this.x = x;
-        this.y = y;
-        this.dir = dir;
-        this.group = group;
-        this.tf = tf;
+        // 调用基类构造器，为属性赋值，直接赋值父类属性不可以
+        super(x, y,dir,group,tf);
 
         rectT.x = x;
         rectT.y = y;
@@ -57,7 +52,7 @@ public class Tank {
         }
     }
 
-
+    @Override
     public void paint(Graphics g){
         if (!living) {
             tf.tanks.remove(this);
@@ -82,7 +77,7 @@ public class Tank {
 
     private void move() {
         // 如果moving为空，直接返回，不移动
-        if (! moving){
+        if (!moving){
             return;
         }
         switch (dir){
@@ -140,37 +135,6 @@ public class Tank {
         this.dir = Dir.values()[random.nextInt(4)];
     }
 
-    public boolean isMoving() {
-        return moving;
-    }
-
-    public void setMoving(boolean moving) {
-        this.moving = moving;
-    }
-
-    public int getX() {
-        return x;
-    }
-
-    public void setX(int x) {
-        this.x = x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    public void setY(int y) {
-        this.y = y;
-    }
-
-    public Dir getDir() {
-        return dir;
-    }
-
-    public void setDir(Dir dir) {
-        this.dir = dir;
-    }
 
     public static int getWIDTH() {
         return WIDTH;
@@ -180,22 +144,16 @@ public class Tank {
         return HEIGTH;
     }
 
-    public Group getGroup() {
-        return group;
-    }
-
-    public TankFrame getTf() {
-        return tf;
-    }
 
     /**
      * 发射子弹
      */
+    @Override
     public void fire() {
 //        tf.bulletList.add(new Bullet(x,y,dir,group,tf));
         fireStrategy.fire(this);
     }
-
+    @Override
     public void die() {
         this.living = false;
     }

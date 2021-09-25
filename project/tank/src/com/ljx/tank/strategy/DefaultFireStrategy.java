@@ -3,6 +3,7 @@ package com.ljx.tank.strategy;
 import com.ljx.tank.Bullet;
 import com.ljx.tank.Tank;
 import com.ljx.tank.TankFrame;
+import com.ljx.tank.factory.BaseTank;
 
 /**
  * @ClassName : DefaultFireStrategy
@@ -19,7 +20,7 @@ public class DefaultFireStrategy implements FireStrategy{
         return defaultFireStrategy;
     }
     @Override
-    public void fire(Tank t) {
+    public void fire(BaseTank t) {
         TankFrame tf = t.getTf();
         tf.gameFactory.createBullet(t.getX(), t.getY(), t.getDir(),t.getGroup(),t.getTf());
     }

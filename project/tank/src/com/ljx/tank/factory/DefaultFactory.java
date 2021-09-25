@@ -10,8 +10,8 @@ import com.ljx.tank.*;
  */
 public class DefaultFactory extends GameFactory {
     @Override
-    public BaseTank createTank() {
-        return null;
+    public BaseTank createTank(int x, int y, Dir dir, Group group,TankFrame tf) {
+        return new Tank(x, y, dir, group, tf);
     }
 
     @Override

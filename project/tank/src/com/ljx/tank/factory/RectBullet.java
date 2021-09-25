@@ -110,7 +110,7 @@ public class RectBullet extends BaseBullet{
      * @return
      */
     @Override
-    public void collideWith(Tank tank) {
+    public void collideWith(BaseTank tank) {
         // 分别绘制子弹与坦克的矩形 每调用一次创建两个对象，会导致创建对象越来越多
         // 为解决该问题，将rect放置 tank bullet中作为属性
 //        Rectangle rectB = new Rectangle(this.x, this.y, WIDTH, HEIGTH);

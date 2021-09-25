@@ -1,6 +1,7 @@
 package com.ljx.tank.strategy;
 
 import com.ljx.tank.Tank;
+import com.ljx.tank.factory.BaseTank;
 
 /**
  * @ClassName : FireStrategy
@@ -9,5 +10,5 @@ import com.ljx.tank.Tank;
  * @Description : 子弹发射接口  策略模式
  */
 public interface FireStrategy {
-    void fire(Tank t);
+    void fire(BaseTank t);
 }
