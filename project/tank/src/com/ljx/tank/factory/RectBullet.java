@@ -1,17 +1,16 @@
-package com.ljx.tank;
+package com.ljx.tank.factory;
 
-import com.ljx.tank.factory.BaseBullet;
-import com.ljx.tank.factory.BaseExplode;
+import com.ljx.tank.*;
 
 import java.awt.*;
 
 /**
- * @ClassName : Bullet
- * @Author : ljx
- * @Date: 2021/9/11 9:02
- * @Description : 子弹类
+ * @ClassName : RectBullet
+ * @Author : LT
+ * @Date: 2021/9/25 21:45
+ * @Description : 矩形的子弹
  */
-public class Bullet extends BaseBullet {
+public class RectBullet extends BaseBullet{
     private int x;
     private int y;
     private Dir dir;
@@ -31,7 +30,7 @@ public class Bullet extends BaseBullet {
         return HEIGTH;
     }
 
-    public Bullet(int x, int y, Dir dir, Group group, TankFrame tf) {
+    public RectBullet(int x, int y, Dir dir, Group group, TankFrame tf) {
         this(x,y,dir);
         this.tf = tf;
         this.group = group;
@@ -42,48 +41,39 @@ public class Bullet extends BaseBullet {
         tf.bulletList.add(this); // 创建一个子弹，自动加入子弹队列
     }
 
-    public Bullet(int x, int y, Dir dir) {
+    public RectBullet(int x, int y, Dir dir) {
         this.dir = dir;
 
         switch (this.dir) {
             case LEFT:
-                this.x = x - Bullet.WIDTH;
-                this.y = y + Tank.getHEIGTH()/2 - Bullet.HEIGTH/2;
+                this.x = x - WIDTH;
+                this.y = y + Tank.getHEIGTH()/2 - HEIGTH/2;
                 break;
             case UP:
-                this.x = x + Tank.getWIDTH()/2 - Bullet.HEIGTH/2;
-                this.y = y - Bullet.HEIGTH;
+                this.x = x + Tank.getWIDTH()/2 - HEIGTH/2;
+                this.y = y - HEIGTH;
                 break;
             case RIGHT:
                 this.x = x + Tank.getWIDTH();
-                this.y = y + Tank.getHEIGTH()/2 - Bullet.HEIGTH/2;
+                this.y = y + Tank.getHEIGTH()/2 - HEIGTH/2;
                 break;
             case DOWN:
-                this.x = x + Tank.getWIDTH()/2 - Bullet.HEIGTH/2;
+                this.x = x + Tank.getWIDTH()/2 - HEIGTH/2;
                 this.y = y + Tank.getHEIGTH();
                 break;
 
         }
     }
+
     @Override
     public void paint(Graphics g){
         if (!living) {
             tf.bulletList.remove(this);
         }
-        switch (dir){
-            case LEFT:
-                g.drawImage(ResourceMgr.bulletL,x,y,null);
-                break;
-            case RIGHT:
-                g.drawImage(ResourceMgr.bulletR,x,y,null);
-                break;
-            case DOWN:
-                g.drawImage(ResourceMgr.bulletD,x,y,null);
-                break;
-            case UP:
-                g.drawImage(ResourceMgr.bulletU,x,y,null);
-                break;
-        }
+        Color c = g.getColor();
+        g.setColor(Color.GREEN);
+        g.fillRect(x,y,WIDTH,HEIGTH);
+        g.setColor(c);
         move();
     }
 
@@ -133,8 +123,8 @@ public class Bullet extends BaseBullet {
                 return ;
             }
             tank.die();
-            int ex = tank.getX() + Tank.getWIDTH()/2 - Explode.getWIDTH()/2;
-            int ey = tank.getY() + Tank.getHEIGTH()/2 - Explode.getHEIGTH()/2;
+            int ex = tank.getX() + Tank.getWIDTH()/2 - RectExplode.getWIDTH()/2;
+            int ey = tank.getY() + Tank.getHEIGTH()/2 - RectExplode.getHEIGTH()/2;
             tf.explodes.add(tf.gameFactory.createExplode(ex,ey,tf));
         }
     }

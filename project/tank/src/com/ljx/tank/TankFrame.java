@@ -1,5 +1,7 @@
 package com.ljx.tank;
 
+import com.ljx.tank.factory.*;
+
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -17,11 +19,13 @@ import java.util.List;
 public class TankFrame extends Frame {
 
     Tank mainTank = new Tank(200,500,Dir.LEFT,Group.GOOD,this);
-    List<Bullet> bulletList = new ArrayList();
-    List<Tank> tanks = new ArrayList<Tank>();
-    List<Explode> explodes = new ArrayList();
-    static int GAME_WIDTH=1080;
-    static int GAME_HEIGHT=960;
+    public List<BaseBullet> bulletList = new ArrayList();
+    List<Tank> tanks = new ArrayList<>();
+    public List<BaseExplode> explodes = new ArrayList();
+    public static int GAME_WIDTH=1080;
+    public static int GAME_HEIGHT=960;
+
+    public GameFactory gameFactory = new RectFactory();
 
     public TankFrame(){
         setSize(GAME_WIDTH,GAME_HEIGHT);

@@ -1,5 +1,7 @@
 package com.ljx.tank;
 
+import com.ljx.tank.factory.BaseExplode;
+
 import java.awt.*;
 
 /**
@@ -8,7 +10,7 @@ import java.awt.*;
  * @Date: 2021/9/12 17:48
  * @Description : 爆炸
  */
-public class Explode {
+public class Explode extends BaseExplode {
 
     private int x;
     private int y;
@@ -35,6 +37,7 @@ public class Explode {
         this.tf = tf;
     }
 
+    @Override
     public void paint(Graphics g){
         g.drawImage(ResourceMgr.exploded[step++],x,y,null);
         // 当爆炸结束时，移除该爆炸对象

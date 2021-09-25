@@ -3,6 +3,7 @@ package com.ljx.tank.strategy;
 import com.ljx.tank.Bullet;
 import com.ljx.tank.Dir;
 import com.ljx.tank.Tank;
+import com.ljx.tank.TankFrame;
 
 /**
  * @ClassName : FourDirFireStrategy
@@ -22,9 +23,10 @@ public class FourDirFireStrategy implements FireStrategy{
 
     @Override
     public void fire(Tank t) {
-        new Bullet(t.getX(), t.getY(), Dir.DOWN,t.getGroup(),t.getTf());
-        new Bullet(t.getX(), t.getY(), Dir.LEFT,t.getGroup(),t.getTf());
-        new Bullet(t.getX(), t.getY(), Dir.UP,t.getGroup(),t.getTf());
-        new Bullet(t.getX(), t.getY(), Dir.RIGHT,t.getGroup(),t.getTf());
+        TankFrame tf = t.getTf();
+        tf.gameFactory.createBullet(t.getX(), t.getY(), Dir.DOWN,t.getGroup(),t.getTf());
+        tf.gameFactory.createBullet(t.getX(), t.getY(), Dir.LEFT,t.getGroup(),t.getTf());
+        tf.gameFactory.createBullet(t.getX(), t.getY(), Dir.UP,t.getGroup(),t.getTf());
+        tf.gameFactory.createBullet(t.getX(), t.getY(), Dir.RIGHT,t.getGroup(),t.getTf());
     }
 }

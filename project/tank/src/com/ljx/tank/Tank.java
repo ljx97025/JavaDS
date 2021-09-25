@@ -28,7 +28,7 @@ public class Tank {
     private static final int WIDTH = ResourceMgr.goodTankU.getWidth();
     private static final int HEIGTH = ResourceMgr.goodTankU.getHeight();
 
-    Rectangle rectT = new Rectangle();
+    public Rectangle rectT = new Rectangle();
 
     public Tank(int x, int y, Dir dir, Group group,TankFrame tf) {
         this.x = x;
