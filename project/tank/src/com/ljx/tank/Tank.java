@@ -17,7 +17,6 @@ import java.util.Random;
 public class Tank extends BaseTank {
 
     private boolean living = true;
-    private TankFrame tf = null;
 
     FireStrategy fireStrategy = DefaultFireStrategy.getInstance(); // 子弹发射策略
     private Random random = new Random();
@@ -29,9 +28,13 @@ public class Tank extends BaseTank {
 
 
     public Tank(int x, int y, Dir dir, Group group,TankFrame tf) {
-        // 调用基类构造器，为属性赋值，直接赋值父类属性不可以
-        super(x, y,dir,group,tf);
-
+        // 调用基类构造器，为属性赋值，可以直接赋值非private修饰的父类属性
+//        super(x, y,dir,group,tf);
+        this.x = x;
+        this.y = y;
+        this.group = group;
+        this.tf = tf;
+        this.dir = dir;
         rectT.x = x;
         rectT.y = y;
         rectT.width = WIDTH;

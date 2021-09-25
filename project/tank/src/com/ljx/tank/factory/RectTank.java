@@ -16,7 +16,6 @@ import java.util.Random;
  */
 public class RectTank extends BaseTank{
     private boolean living = true;
-    private TankFrame tf = null;
 
     FireStrategy fireStrategy = DefaultFireStrategy.getInstance(); // 子弹发射策略
     private Random random = new Random();
@@ -28,8 +27,12 @@ public class RectTank extends BaseTank{
 
 
     public RectTank(int x, int y, Dir dir, Group group,TankFrame tf) {
-        super(x, y,dir,group,tf);
-
+//        super(x, y,dir,group,tf);
+        this.x = x;
+        this.y = y;
+        this.group = group;
+        this.tf = tf;
+        this.dir = dir;
         rectT.x = x;
         rectT.y = y;
         rectT.width = WIDTH;

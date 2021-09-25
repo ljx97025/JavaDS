@@ -25,7 +25,7 @@ public class TankFrame extends Frame {
     public static int GAME_WIDTH=1080;
     public static int GAME_HEIGHT=960;
 
-    public GameFactory gameFactory = new DefaultFactory();
+    public GameFactory gameFactory = new RectFactory();
 
     public TankFrame(){
         setSize(GAME_WIDTH,GAME_HEIGHT);

@@ -130,9 +130,9 @@ public class Bullet extends BaseBullet {
         if (rectB.intersects(tank.rectT)){
             this.die();
             // 如果子弹是自己的或者是队友则，伤害无效
-            if (this.group == tank.getGroup()) {
-                return ;
-            }
+//            if (this.group == tank.getGroup()) {
+//                return ;
+//            }
             tank.die();
             int ex = tank.getX() + Tank.getWIDTH()/2 - Explode.getWIDTH()/2;
             int ey = tank.getY() + Tank.getHEIGTH()/2 - Explode.getHEIGTH()/2;

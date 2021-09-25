@@ -25,13 +25,13 @@ public abstract class BaseTank {
     public Rectangle rectT = new Rectangle();
 
     // 抽象类可以有构造函数，但是不能new
-    public BaseTank(int x, int y, Dir dir, Group group, TankFrame tf) {
-        this.x = x;
-        this.y = y;
-        this.group = group;
-        this.tf = tf;
-        this.dir = dir;
-    }
+//    public BaseTank(int x, int y, Dir dir, Group group, TankFrame tf) {
+//        this.x = x;
+//        this.y = y;
+//        this.group = group;
+//        this.tf = tf;
+//        this.dir = dir;
+//    }
 
     public abstract void paint(Graphics g);
 
