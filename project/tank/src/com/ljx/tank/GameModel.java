@@ -1,5 +1,9 @@
 package com.ljx.tank;
 
+import com.ljx.tank.collide.BulletTanKCollider;
+import com.ljx.tank.collide.Collider;
+import com.ljx.tank.collide.ColliderChain;
+
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +18,8 @@ public class GameModel {
     Tank mainTank = new Tank(200,500,Dir.UP,Group.GOOD,this,false);
 
     private List<GameObject> gameObjects = new ArrayList<>();
+    private Collider collider = new ColliderChain();
+
 
     public GameModel(){
         int initBadTankCount = Integer.parseInt((String)PropertiesMgr.get("initBadTankCount")) ;
@@ -33,22 +39,17 @@ public class GameModel {
         for (int i=0;i<gameObjects.size();i++){
             gameObjects.get(i).paint(g);
         }
-//        for (int i=0;i<tanks.size();i++){
-//            tanks.get(i).setMoving(true); // 保证敌方坦克可以移动
-//            tanks.get(i).paint(g);
-//        }
-//        //绘制爆炸
-//        for (int i=0;i<explodes.size();i++){
-//            explodes.get(i).paint(g);
-//        }
 
-//        // 子弹撞击坦克检测
-//        for (int i=0;i<bulletList.size();i++){
-//            for (int j=0;j<tanks.size();j++){
-//                bulletList.get(i).collideWith(tanks.get(j));
-//            }
-//
-//        }
+        // 碰撞检测
+        for (int i=0;i<gameObjects.size();i++){
+            // i+1 防止重复检测
+            for (int j=i+1;j<gameObjects.size();j++){
+               if(collider.collide(gameObjects.get(i),gameObjects.get(j))) {
+                   break;
+               }
+            }
+
+        }
 
 
     }

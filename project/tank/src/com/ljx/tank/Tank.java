@@ -205,4 +205,8 @@ public class Tank extends GameObject{
     public void die() {
         this.living = false;
     }
+
+    public Rectangle getRectT() {
+        return rectT;
+    }
 }
