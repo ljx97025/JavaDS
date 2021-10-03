@@ -13,13 +13,13 @@ import java.util.Random;
  * @Date: 2021/9/10 23:48
  * @Description : 坦克类
  */
-public class Tank {
+public class Tank extends GameObject{
     private int x; // 横坐标
     private int y; // 纵坐标
     private Dir dir; // 方向
-    private boolean moving; // 坦克移动标志
+    private boolean moving = true; // 坦克移动标志
     private boolean living = true;
-    private TankFrame tf = null;
+    private GameModel gm = null;
     private Group group; // 敌我分类标签
     FireStrategy fireStrategy = DefaultFireStrategy.getInstance(); // 子弹发射策略
     private Random random = new Random();
@@ -30,12 +30,18 @@ public class Tank {
 
     Rectangle rectT = new Rectangle();
 
-    public Tank(int x, int y, Dir dir, Group group,TankFrame tf) {
+    // 解决玩者坦克初始是静止的
+    public Tank(int x, int y, Dir dir, Group group,GameModel gm, boolean mv){
+        this(x,y,dir,group,gm);
+        this.moving = mv;
+    }
+
+    public Tank(int x, int y, Dir dir, Group group,GameModel gm) {
         this.x = x;
         this.y = y;
         this.dir = dir;
         this.group = group;
-        this.tf = tf;
+        this.gm = gm;
 
         rectT.x = x;
         rectT.y = y;
@@ -60,7 +66,7 @@ public class Tank {
 
     public void paint(Graphics g){
         if (!living) {
-            tf.tanks.remove(this);
+            gm.remove(this);
         }
         switch (dir){
             case LEFT:
@@ -184,8 +190,8 @@ public class Tank {
         return group;
     }
 
-    public TankFrame getTf() {
-        return tf;
+    public GameModel getGm() {
+        return gm;
     }
 
     /**

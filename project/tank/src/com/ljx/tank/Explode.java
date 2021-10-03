@@ -8,11 +8,11 @@ import java.awt.*;
  * @Date: 2021/9/12 17:48
  * @Description : 爆炸
  */
-public class Explode {
+public class Explode extends GameObject{
 
     private int x;
     private int y;
-    private TankFrame tf;
+    private GameModel gm;
     private boolean living = true;
 
     private int step=0;
@@ -29,17 +29,17 @@ public class Explode {
         return HEIGTH;
     }
 
-    public Explode(int x, int y, TankFrame tf) {
+    public Explode(int x, int y, GameModel gm) {
         this.x = x;
         this.y = y;
-        this.tf = tf;
+        this.gm = gm;
     }
 
     public void paint(Graphics g){
         g.drawImage(ResourceMgr.exploded[step++],x,y,null);
         // 当爆炸结束时，移除该爆炸对象
         if (step >= ResourceMgr.exploded.length){
-            tf.explodes.remove(this);
+            gm.remove(this);
             step = 0;
         }
     }

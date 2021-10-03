@@ -8,12 +8,12 @@ import java.awt.*;
  * @Date: 2021/9/11 9:02
  * @Description : 子弹类
  */
-public class Bullet {
+public class Bullet extends GameObject{
     private int x;
     private int y;
     private Dir dir;
     private Group group;
-    private TankFrame tf;
+    private GameModel gm;
     private boolean living = true;
     Rectangle rectB = new Rectangle();
     private static final int SPEFD = 15;
@@ -28,15 +28,15 @@ public class Bullet {
         return HEIGTH;
     }
 
-    public Bullet(int x, int y, Dir dir, Group group, TankFrame tf) {
+    public Bullet(int x, int y, Dir dir, Group group, GameModel gm) {
         this(x,y,dir);
-        this.tf = tf;
+        this.gm = gm;
         this.group = group;
         rectB.x = this.x;
         rectB.y = this.y;
         rectB.width = WIDTH;
         rectB.height = HEIGTH;
-        tf.bulletList.add(this); // 创建一个子弹，自动加入子弹队列
+        gm.add(this); // 创建一个子弹，自动加入子弹队列
     }
 
     public Bullet(int x, int y, Dir dir) {
@@ -65,7 +65,7 @@ public class Bullet {
 
     public void paint(Graphics g){
         if (!living) {
-            tf.bulletList.remove(this);
+            gm.remove(this);
         }
         switch (dir){
             case LEFT:
@@ -101,7 +101,7 @@ public class Bullet {
                 break;
         }
 
-        if (x<0 || y<0 || x>tf.GAME_WIDTH || y>tf.GAME_HEIGHT) {
+        if (x<0 || y<0 || x>TankFrame.GAME_WIDTH || y>TankFrame.GAME_HEIGHT) {
             living = false;
         }
 
@@ -131,7 +131,7 @@ public class Bullet {
             tank.die();
             int ex = tank.getX() + Tank.getWIDTH()/2 - Explode.getWIDTH()/2;
             int ey = tank.getY() + Tank.getHEIGTH()/2 - Explode.getHEIGTH()/2;
-            tf.explodes.add(new Explode(ex,ey,tf));
+            gm.add(new Explode(ex,ey,gm));
         }
     }
 

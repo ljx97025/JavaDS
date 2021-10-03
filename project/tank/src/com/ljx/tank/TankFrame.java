@@ -16,12 +16,11 @@ import java.util.List;
  */
 public class TankFrame extends Frame {
 
-    Tank mainTank = new Tank(200,500,Dir.LEFT,Group.GOOD,this);
-    List<Bullet> bulletList = new ArrayList();
-    List<Tank> tanks = new ArrayList<Tank>();
-    List<Explode> explodes = new ArrayList();
+
     static int GAME_WIDTH=1080;
     static int GAME_HEIGHT=960;
+
+    GameModel gm = new GameModel();
 
     public TankFrame(){
         setSize(GAME_WIDTH,GAME_HEIGHT);
@@ -55,34 +54,7 @@ public class TankFrame extends Frame {
 
     @Override
     public void paint(Graphics g) {
-        Color c = g.getColor();
-        g.setColor(Color.WHITE);
-        g.drawString("剩余子弹数："+bulletList.size(),10,50);
-        g.drawString("剩余敌方数："+tanks.size(),10,70);
-        g.drawString("tank x,y："+mainTank.getX()+","+mainTank.getY(),10,90);
-        g.setColor(c);
-        mainTank.paint(g);
-        for (int i=0;i<bulletList.size();i++){
-            bulletList.get(i).paint(g);
-        }
-        for (int i=0;i<tanks.size();i++){
-            tanks.get(i).setMoving(true); // 保证敌方坦克可以移动
-            tanks.get(i).paint(g);
-        }
-        //绘制爆炸
-        for (int i=0;i<explodes.size();i++){
-            explodes.get(i).paint(g);
-        }
-
-        // 子弹撞击坦克检测
-        for (int i=0;i<bulletList.size();i++){
-            for (int j=0;j<tanks.size();j++){
-                bulletList.get(i).collideWith(tanks.get(j));
-            }
-
-        }
-
-
+        gm.paint(g);
     }
 
     class KeyListener extends KeyAdapter {
@@ -110,7 +82,7 @@ public class TankFrame extends Frame {
                     bd = true;
                     break;
                 case KeyEvent.VK_CONTROL:
-                    mainTank.fire();
+                    gm.getMainTank().fire();
                     break;
             }
 
@@ -139,6 +111,8 @@ public class TankFrame extends Frame {
         }
 
         private void setMainTankDir(){
+
+            Tank mainTank = gm.getMainTank();
 
             if (!bl && !bu && !br && !bd){
                 mainTank.setMoving(false);
