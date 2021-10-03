@@ -1,9 +1,8 @@
 package com.ljx.tank.collide;
 
 import com.ljx.tank.Bullet;
-import com.ljx.tank.Explode;
 import com.ljx.tank.GameObject;
-import com.ljx.tank.Tank;
+
 
 /**
  * @ClassName : BulletBulletCollider
@@ -17,7 +16,12 @@ public class BulletBulletCollider implements Collider{
         if (o1 instanceof Bullet && o2 instanceof Bullet) {
             Bullet bullet1 = (Bullet) o1;
             Bullet bullet2 = (Bullet) o2;
-            // 解决坦克无法连发问题
+            // 如果子弹是同向的，则不检测，视为连发，不做处理
+            if (bullet1.getDir() == bullet2.getDir()) {
+                return false;
+            }
+
+            // 解决坦克无法连发问题，已解决，见上注释
             if (bullet1.getRectB().intersects(bullet2.getRectB())){
                 bullet1.die();
                 bullet2.die();

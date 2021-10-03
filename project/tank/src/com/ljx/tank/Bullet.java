@@ -146,4 +146,8 @@ public class Bullet extends GameObject{
     public Rectangle getRectB() {
         return rectB;
     }
+
+    public Dir getDir() {
+        return dir;
+    }
 }

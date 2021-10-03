@@ -29,6 +29,9 @@ public class Tank extends GameObject{
     private static final int HEIGTH = ResourceMgr.goodTankU.getHeight();
 
     Rectangle rectT = new Rectangle();
+    // 记录上一时刻坦克位置
+    private int oldx;
+    private int oldy;
 
     // 解决玩者坦克初始是静止的
     public Tank(int x, int y, Dir dir, Group group,GameModel gm, boolean mv){
@@ -82,7 +85,9 @@ public class Tank extends GameObject{
                 g.drawImage(group==Group.GOOD ? ResourceMgr.goodTankU : ResourceMgr.badTankU,x,y,null);
                 break;
         }
-
+        //记录上一时刻位置
+        oldx = x;
+        oldy = y;
         move();
     }
 
@@ -208,5 +213,26 @@ public class Tank extends GameObject{
 
     public Rectangle getRectT() {
         return rectT;
+    }
+    /*
+     * @Author lt
+     * @Description 恢复坦克上一时刻位置
+     * @Param
+     * @return
+     */
+    public void resetXY() {
+        x = oldx;
+        y = oldy;
+        setMoving(true);
+    }
+
+    /*
+     * @Author lt
+     * @Description tank停止运动
+     * @Param
+     * @return
+     */
+    public void stop() {
+        setMoving(false);
     }
 }
