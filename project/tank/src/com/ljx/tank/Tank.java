@@ -220,19 +220,30 @@ public class Tank extends GameObject{
      * @Param
      * @return
      */
-    public void resetXY() {
-        x = oldx;
-        y = oldy;
-        setMoving(true);
-    }
+//    public void resetXY() {
+//        x = oldx;
+//        y = oldy;
+//        setMoving(true);
+//    }
+//
+//    /*
+//     * @Author lt
+//     * @Description tank停止运动
+//     * @Param
+//     * @return
+//     */
+//    public void stop() {
+//        setMoving(false);
+//    }
 
     /*
      * @Author lt
-     * @Description tank停止运动
+     * @Description 恢复坦克上一时刻位置
      * @Param
      * @return
      */
-    public void stop() {
-        setMoving(false);
+    public void back() {
+        x = oldx;
+        y = oldy;
     }
 }

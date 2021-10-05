@@ -20,6 +20,8 @@ public class ColliderChain implements Collider{
         add(new BulletTanKCollider());
         add(new TankTankCollider());
         add(new BulletBulletCollider());
+        add(new BulletWallCollider());
+        add(new TankWallCollider());
     }
 
     /**

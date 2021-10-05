@@ -66,6 +66,7 @@ public class Bullet extends GameObject{
     public void paint(Graphics g){
         if (!living) {
             gm.remove(this);
+            return;  // 当子弹die时，不再绘制
         }
         switch (dir){
             case LEFT:

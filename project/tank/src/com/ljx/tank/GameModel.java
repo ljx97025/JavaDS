@@ -1,6 +1,5 @@
 package com.ljx.tank;
 
-import com.ljx.tank.collide.BulletTanKCollider;
 import com.ljx.tank.collide.Collider;
 import com.ljx.tank.collide.ColliderChain;
 
@@ -26,6 +25,8 @@ public class GameModel {
         for (int i=0;i<initBadTankCount;i++){
             add(new Tank(50+i*80,200,Dir.DOWN,Group.BAD,this));
         }
+
+        add(new Wall(500,500,300,50));
 
     }
 
