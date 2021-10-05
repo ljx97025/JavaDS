@@ -22,6 +22,7 @@ public class Wall extends GameObject{
         this.width = width;
         this.height = height;
         rectW = new Rectangle(x,y,width,height);
+        GameModel.getInstance().add(this);
     }
 
     @Override

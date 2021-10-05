@@ -19,7 +19,7 @@ public class Tank extends GameObject{
     private Dir dir; // 方向
     private boolean moving = true; // 坦克移动标志
     private boolean living = true;
-    private GameModel gm = null;
+
     private Group group; // 敌我分类标签
     FireStrategy fireStrategy = DefaultFireStrategy.getInstance(); // 子弹发射策略
     private Random random = new Random();
@@ -34,17 +34,17 @@ public class Tank extends GameObject{
     private int oldy;
 
     // 解决玩者坦克初始是静止的
-    public Tank(int x, int y, Dir dir, Group group,GameModel gm, boolean mv){
-        this(x,y,dir,group,gm);
+    public Tank(int x, int y, Dir dir, Group group, boolean mv){
+        this(x,y,dir,group);
         this.moving = mv;
     }
 
-    public Tank(int x, int y, Dir dir, Group group,GameModel gm) {
+    public Tank(int x, int y, Dir dir, Group group) {
         this.x = x;
         this.y = y;
         this.dir = dir;
         this.group = group;
-        this.gm = gm;
+
 
         rectT.x = x;
         rectT.y = y;
@@ -64,12 +64,14 @@ public class Tank extends GameObject{
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        GameModel.getInstance().add(this);
     }
 
 
     public void paint(Graphics g){
         if (!living) {
-            gm.remove(this);
+            GameModel.getInstance().remove(this);
         }
         switch (dir){
             case LEFT:
@@ -195,9 +197,6 @@ public class Tank extends GameObject{
         return group;
     }
 
-    public GameModel getGm() {
-        return gm;
-    }
 
     /**
      * 发射子弹

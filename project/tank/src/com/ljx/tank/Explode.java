@@ -12,7 +12,6 @@ public class Explode extends GameObject{
 
     private int x;
     private int y;
-    private GameModel gm;
     private boolean living = true;
 
     private int step=0;
@@ -29,17 +28,16 @@ public class Explode extends GameObject{
         return HEIGTH;
     }
 
-    public Explode(int x, int y, GameModel gm) {
+    public Explode(int x, int y) {
         this.x = x;
         this.y = y;
-        this.gm = gm;
     }
 
     public void paint(Graphics g){
         g.drawImage(ResourceMgr.exploded[step++],x,y,null);
         // 当爆炸结束时，移除该爆炸对象
         if (step >= ResourceMgr.exploded.length){
-            gm.remove(this);
+            GameModel.getInstance().remove(this);
             step = 0;
         }
     }

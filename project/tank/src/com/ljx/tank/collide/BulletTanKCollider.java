@@ -1,9 +1,6 @@
 package com.ljx.tank.collide;
 
-import com.ljx.tank.Bullet;
-import com.ljx.tank.Explode;
-import com.ljx.tank.GameObject;
-import com.ljx.tank.Tank;
+import com.ljx.tank.*;
 
 /**
  * @ClassName : BulletTanKCollider
@@ -27,7 +24,7 @@ public class BulletTanKCollider implements Collider{
                 tank.die();
                 int ex = tank.getX() + Tank.getWIDTH()/2 - Explode.getWIDTH()/2;
                 int ey = tank.getY() + Tank.getHEIGTH()/2 - Explode.getHEIGTH()/2;
-                tank.getGm().add(new Explode(ex,ey,tank.getGm()));
+                GameModel.getInstance().add(new Explode(ex,ey));
                 return true;
             }
 

@@ -22,9 +22,9 @@ public class FourDirFireStrategy implements FireStrategy{
 
     @Override
     public void fire(Tank t) {
-        new Bullet(t.getX(), t.getY(), Dir.DOWN,t.getGroup(),t.getGm());
-        new Bullet(t.getX(), t.getY(), Dir.LEFT,t.getGroup(),t.getGm());
-        new Bullet(t.getX(), t.getY(), Dir.UP,t.getGroup(),t.getGm());
-        new Bullet(t.getX(), t.getY(), Dir.RIGHT,t.getGroup(),t.getGm());
+        new Bullet(t.getX(), t.getY(), Dir.DOWN,t.getGroup());
+        new Bullet(t.getX(), t.getY(), Dir.LEFT,t.getGroup());
+        new Bullet(t.getX(), t.getY(), Dir.UP,t.getGroup());
+        new Bullet(t.getX(), t.getY(), Dir.RIGHT,t.getGroup());
     }
 }

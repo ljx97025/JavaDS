@@ -14,20 +14,32 @@ import java.util.List;
  * @Description : Model
  */
 public class GameModel {
-    Tank mainTank = new Tank(200,500,Dir.UP,Group.GOOD,this,false);
 
+    Tank mainTank = null;
     private List<GameObject> gameObjects = new ArrayList<>();
     private Collider collider = new ColliderChain();
+    // 改造为单例模式，
+    private static final GameModel INSTANCE = new GameModel();
 
+    static {
+        INSTANCE.init();
+    }
 
-    public GameModel(){
+    private GameModel(){
+    }
+
+    public static GameModel getInstance(){
+        return INSTANCE;
+    }
+    // 解决tank与GameModel循环创建问题
+    private void init() {
+        mainTank = new Tank(200,500,Dir.UP,Group.GOOD,false);
         int initBadTankCount = Integer.parseInt((String)PropertiesMgr.get("initBadTankCount")) ;
         for (int i=0;i<initBadTankCount;i++){
-            add(new Tank(50+i*80,200,Dir.DOWN,Group.BAD,this));
+            new Tank(50+i*80,200,Dir.DOWN,Group.BAD);
         }
 
-        add(new Wall(500,500,300,50));
-
+        new Wall(500,500,300,50);
     }
 
     public void paint(Graphics g) {

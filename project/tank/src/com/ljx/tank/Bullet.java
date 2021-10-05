@@ -13,7 +13,7 @@ public class Bullet extends GameObject{
     private int y;
     private Dir dir;
     private Group group;
-    private GameModel gm;
+
     private boolean living = true;
     Rectangle rectB = new Rectangle();
     private static final int SPEFD = 15;
@@ -28,15 +28,15 @@ public class Bullet extends GameObject{
         return HEIGTH;
     }
 
-    public Bullet(int x, int y, Dir dir, Group group, GameModel gm) {
+    public Bullet(int x, int y, Dir dir, Group group) {
         this(x,y,dir);
-        this.gm = gm;
+
         this.group = group;
         rectB.x = this.x;
         rectB.y = this.y;
         rectB.width = WIDTH;
         rectB.height = HEIGTH;
-        gm.add(this); // 创建一个子弹，自动加入子弹队列
+        GameModel.getInstance().add(this); // 创建一个子弹，自动加入子弹队列
     }
 
     public Bullet(int x, int y, Dir dir) {
@@ -65,7 +65,7 @@ public class Bullet extends GameObject{
 
     public void paint(Graphics g){
         if (!living) {
-            gm.remove(this);
+            GameModel.getInstance().remove(this);
             return;  // 当子弹die时，不再绘制
         }
         switch (dir){
