@@ -48,7 +48,7 @@ public class GameModel {
 
         g.drawString("tank x,y："+mainTank.getX()+","+mainTank.getY(),10,90);
         g.setColor(c);
-        mainTank.paint(g);
+//        mainTank.paint(g); // 防止二次绘制玩家坦克，
         for (int i=0;i<gameObjects.size();i++){
             gameObjects.get(i).paint(g);
         }
