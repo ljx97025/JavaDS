@@ -15,7 +15,7 @@ public class BulletTanKCollider implements Collider{
             Tank tank = (Tank) o1;
             Bullet bullet = (Bullet) o2;
 
-            if (bullet.getRectB().intersects(tank.getRectT())){
+            if (bullet.getRect().intersects(tank.getRect())){
                 bullet.die();
                 // 如果子弹是自己的或者是队友则，伤害无效
                 if (bullet.getGroup() == tank.getGroup()) {

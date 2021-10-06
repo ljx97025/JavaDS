@@ -34,6 +34,7 @@ public class GameModel {
     // 解决tank与GameModel循环创建问题
     private void init() {
         mainTank = new Tank(200,500,Dir.UP,Group.GOOD,false);
+        remove(mainTank); // 不放在gameObjects
         int initBadTankCount = Integer.parseInt((String)PropertiesMgr.get("initBadTankCount")) ;
         for (int i=0;i<initBadTankCount;i++){
             new Tank(50+i*80,200,Dir.DOWN,Group.BAD);
@@ -48,7 +49,7 @@ public class GameModel {
 
         g.drawString("tank x,y："+mainTank.getX()+","+mainTank.getY(),10,90);
         g.setColor(c);
-//        mainTank.paint(g); // 防止二次绘制玩家坦克，
+        mainTank.paint(g); // 防止二次绘制玩家坦克，
         for (int i=0;i<gameObjects.size();i++){
             gameObjects.get(i).paint(g);
         }

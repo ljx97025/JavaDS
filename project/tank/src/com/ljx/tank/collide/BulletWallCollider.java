@@ -18,7 +18,7 @@ public class BulletWallCollider implements Collider{
 
             Bullet bullet = (Bullet) o1;
             Wall wall = (Wall) o2;
-            if (bullet.getRectB().intersects(wall.getRectW())) {
+            if (bullet.getRect().intersects(wall.getRect())) {
                 bullet.die();
                 return true;
             }

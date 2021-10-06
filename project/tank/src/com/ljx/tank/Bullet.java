@@ -9,13 +9,12 @@ import java.awt.*;
  * @Description : 子弹类
  */
 public class Bullet extends GameObject{
-    private int x;
-    private int y;
+
     private Dir dir;
     private Group group;
 
     private boolean living = true;
-    Rectangle rectB = new Rectangle();
+//    Rectangle rectB = new Rectangle();
     private static final int SPEFD = 15;
     private static final int WIDTH = ResourceMgr.bulletL.getWidth();
     private static final int HEIGTH = ResourceMgr.bulletL.getHeight();
@@ -32,10 +31,11 @@ public class Bullet extends GameObject{
         this(x,y,dir);
 
         this.group = group;
-        rectB.x = this.x;
-        rectB.y = this.y;
-        rectB.width = WIDTH;
-        rectB.height = HEIGTH;
+        rect = new Rectangle(x,y,WIDTH,HEIGTH);
+//        rectB.x = this.x;
+//        rectB.y = this.y;
+//        rectB.width = WIDTH;
+//        rectB.height = HEIGTH;
         GameModel.getInstance().add(this); // 创建一个子弹，自动加入子弹队列
     }
 
@@ -106,8 +106,8 @@ public class Bullet extends GameObject{
             living = false;
         }
 
-        rectB.x = x;
-        rectB.y = y;
+        rect.x = x;
+        rect.y = y;
 
     }
 //
@@ -144,9 +144,9 @@ public class Bullet extends GameObject{
         return group;
     }
 
-    public Rectangle getRectB() {
-        return rectB;
-    }
+//    public Rectangle getRectB() {
+//        return rectB;
+//    }
 
     public Dir getDir() {
         return dir;

@@ -18,7 +18,7 @@ public class TankWallCollider implements Collider{
 
             Tank tank = (Tank) o1;
             Wall wall = (Wall) o2;
-            if (tank.getRectT().intersects(wall.getRectW())) {
+            if (tank.getRect().intersects(wall.getRect())) {
                 tank.back();
             }
         }

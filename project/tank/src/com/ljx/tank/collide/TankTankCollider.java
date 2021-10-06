@@ -18,7 +18,7 @@ public class TankTankCollider implements Collider{
             Tank tank1 = (Tank) o1;
             Tank tank2 = (Tank) o2;
 
-            if (tank1.getRectT().intersects(tank2.getRectT())){
+            if (tank1.getRect().intersects(tank2.getRect())){
 //                tank1.stop();
 //                tank2.stop();
 //                // 增加 坦克碰撞后可以自由移动，复位到上一时刻位置

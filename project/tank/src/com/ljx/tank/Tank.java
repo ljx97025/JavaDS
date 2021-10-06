@@ -14,8 +14,8 @@ import java.util.Random;
  * @Description : 坦克类
  */
 public class Tank extends GameObject{
-    private int x; // 横坐标
-    private int y; // 纵坐标
+//    private int x; // 横坐标
+//    private int y; // 纵坐标
     private Dir dir; // 方向
     private boolean moving = true; // 坦克移动标志
     private boolean living = true;
@@ -28,7 +28,7 @@ public class Tank extends GameObject{
     private static final int WIDTH = ResourceMgr.goodTankU.getWidth();
     private static final int HEIGTH = ResourceMgr.goodTankU.getHeight();
 
-    Rectangle rectT = new Rectangle();
+//    Rectangle rectT = new Rectangle();
     // 记录上一时刻坦克位置
     private int oldx;
     private int oldy;
@@ -45,11 +45,11 @@ public class Tank extends GameObject{
         this.dir = dir;
         this.group = group;
 
-
-        rectT.x = x;
-        rectT.y = y;
-        rectT.width = WIDTH;
-        rectT.height = HEIGTH;
+        rect = new Rectangle(x,y,WIDTH,WIDTH);
+//        rectT.x = x;
+//        rectT.y = y;
+//        rectT.width = WIDTH;
+//        rectT.height = WIDTH;
 
         String fireStrategryName = null;
         if (group == Group.GOOD){
@@ -123,8 +123,8 @@ public class Tank extends GameObject{
 
         boundChecked();
 
-        rectT.x = x;
-        rectT.y = y;
+        rect.x = x;
+        rect.y = y;
 
     }
 
@@ -161,21 +161,21 @@ public class Tank extends GameObject{
         this.moving = moving;
     }
 
-    public int getX() {
-        return x;
-    }
-
-    public void setX(int x) {
-        this.x = x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    public void setY(int y) {
-        this.y = y;
-    }
+//    public int getX() {
+//        return x;
+//    }
+//
+//    public void setX(int x) {
+//        this.x = x;
+//    }
+//
+//    public int getY() {
+//        return y;
+//    }
+//
+//    public void setY(int y) {
+//        this.y = y;
+//    }
 
     public Dir getDir() {
         return dir;
@@ -210,9 +210,9 @@ public class Tank extends GameObject{
         this.living = false;
     }
 
-    public Rectangle getRectT() {
-        return rectT;
-    }
+//    public Rectangle getRectT() {
+//        return rectT;
+//    }
     /*
      * @Author lt
      * @Description 恢复坦克上一时刻位置

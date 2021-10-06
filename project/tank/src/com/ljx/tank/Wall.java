@@ -9,19 +9,18 @@ import java.awt.*;
  * @Description : 墙
  */
 public class Wall extends GameObject{
-    private int x;
-    private int y;
+
     private int width;
     private int height;
 
-    Rectangle rectW = null;
+//    Rectangle rectW = null;
 
     public Wall(int x, int y, int width, int height) {
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
-        rectW = new Rectangle(x,y,width,height);
+        rect = new Rectangle(x,y,width,height);
         GameModel.getInstance().add(this);
     }
 
@@ -33,7 +32,7 @@ public class Wall extends GameObject{
         g.setColor(c);
     }
 
-    public Rectangle getRectW() {
-        return rectW;
-    }
+//    public Rectangle getRectW() {
+//        return rectW;
+//    }
 }

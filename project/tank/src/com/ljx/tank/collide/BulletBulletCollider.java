@@ -22,7 +22,7 @@ public class BulletBulletCollider implements Collider{
             }
 
             // 解决坦克无法连发问题，已解决，见上注释
-            if (bullet1.getRectB().intersects(bullet2.getRectB())){
+            if (bullet1.getRect().intersects(bullet2.getRect())){
                 bullet1.die();
                 bullet2.die();
 
