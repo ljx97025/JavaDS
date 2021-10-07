@@ -1,5 +1,6 @@
 package com.ljx.tank.decorator;
 
+import com.ljx.tank.GameModel;
 import com.ljx.tank.GameObject;
 
 import java.awt.*;
@@ -18,7 +19,11 @@ public class RectDecorator extends GODecorator {
 
     @Override
     public void paint(Graphics g) {
-        if (gameObject == null) {
+        /*
+         * 当子弹不再队列中，则不再绘制，这是由于new Bullet时分别将其放在队列与装饰器中。
+         * 当队列中子弹消失时，装饰器中子弹未消失，子弹仍会绘制，但是x,y不会再变化，则方框出现
+         */
+        if (!GameModel.getInstance().contains(gameObject)) {
             return;
         }
     // bug子弹消失，方框不消失;子弹打击左侧边界，子弹消失，方框不消失，其它侧不存在该种情况

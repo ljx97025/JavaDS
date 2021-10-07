@@ -5,6 +5,7 @@ import com.ljx.tank.GameModel;
 import com.ljx.tank.GameObject;
 import com.ljx.tank.Tank;
 import com.ljx.tank.decorator.RectDecorator;
+import com.ljx.tank.decorator.TailDecorator;
 
 /**
  * @ClassName : DefaultFireStrategy
@@ -22,7 +23,9 @@ public class DefaultFireStrategy implements FireStrategy{
     }
     @Override
     public void fire(Tank t) {
-//        new Bullet(t.getX(), t.getY(), t.getDir(),t.getGroup());
-        GameModel.getInstance().add(new RectDecorator(new Bullet(t.getX(), t.getY(), t.getDir(),t.getGroup())));
+        new Bullet(t.getX(), t.getY(), t.getDir(),t.getGroup());
+//        Bullet bullet = new Bullet(t.getX(), t.getY(), t.getDir(),t.getGroup());
+//        GameModel.getInstance().add(new RectDecorator(bullet));
+//        GameModel.getInstance().add(new TailDecorator(bullet));
     }
 }

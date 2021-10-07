@@ -10,7 +10,7 @@ import java.awt.*;
  * @Date: 2021/10/6 21:50
  * @Description : 装饰器模式
  */
-public class GODecorator extends GameObject {
+public abstract class GODecorator extends GameObject {
 
     protected GameObject gameObject;
 

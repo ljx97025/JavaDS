@@ -79,4 +79,8 @@ public class GameModel {
     public Tank getMainTank() {
         return mainTank;
     }
+
+    public boolean contains(GameObject go) {
+        return gameObjects.contains(go);
+    }
 }
