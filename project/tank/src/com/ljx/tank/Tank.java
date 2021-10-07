@@ -1,10 +1,15 @@
 package com.ljx.tank;
 
+import com.ljx.tank.observer.TankFireEvent;
+import com.ljx.tank.observer.TankFireHandler;
+import com.ljx.tank.observer.TankFireObserver;
 import com.ljx.tank.strategy.DefaultFireStrategy;
 import com.ljx.tank.strategy.FireStrategy;
 
 import java.awt.*;
 import java.lang.reflect.Method;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -244,5 +249,15 @@ public class Tank extends GameObject{
     public void back() {
         x = oldx;
         y = oldy;
+    }
+
+    
+    private List<TankFireObserver> tankFireObservers = Arrays.asList(new TankFireHandler());
+    // 使用观察者模式
+    public void handleFireKey() {
+        TankFireEvent fireEvent = new TankFireEvent(this);
+        for (TankFireObserver o : tankFireObservers) {
+            o.actionOnFire(fireEvent);
+        }
     }
 }
